@@ -16,6 +16,9 @@ namespace BIR.WinForms
 
         string srcPath;
         string destPath;
+        int targetHeight;
+        int targetWidth;
+        Common.Enums.ResizeMode resizeMode = Common.Enums.ResizeMode.Contain;
 
         public Main()
         {
@@ -65,17 +68,14 @@ namespace BIR.WinForms
             if (result != DialogResult.Cancel)
             {
                 destPath = folderPicker.SelectedPath;
+                lblOutputPath.Text = destPath;
             }
 
         }
 
         private void btnProcess_Click(object sender, EventArgs e)
         {
-
-            int targetWidth;
-            int targetHeight;
             bool resizeModeSet = false;
-            Common.Enums.ResizeMode resizeMode = Common.Enums.ResizeMode.Contain;
 
             if (!Int32.TryParse(txtHeight.Text, out targetHeight) || !(Int32.TryParse(txtWidth.Text, out targetWidth)))
             {
@@ -104,15 +104,68 @@ namespace BIR.WinForms
                 return;
             }
 
+            if (bwResizeWorker.IsBusy != true)
+            {
+                bwResizeWorker.RunWorkerAsync();
+            }
+            
+        }
+
+        private void lbBatchFiles_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+
+            foreach(string file in files)
+            {
+                var fi = new FileInfo(file);
+                lbBatchFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
+            }
+
+            
+        }
+
+        private void lbBatchFiles_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void btnClearBatch_Click(object sender, EventArgs e)
+        {
+            lbBatchFiles.Items.Clear();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            BackgroundWorker worker = sender as BackgroundWorker;
 
             foreach (BIR.Common.Models.ImageReference ir in lbBatchFiles.Items)
             {
-                Image srcImage = Image.FromFile(ir.FullName);
-                var resized = BIR.Common.ImageUtility.ResizeImage(srcImage, targetWidth, targetHeight, resizeMode);
-                resized.Save(Path.Combine(destPath, ir.Name), System.Drawing.Imaging.ImageFormat.Jpeg);
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    Image srcImage = Image.FromFile(ir.FullName);
+                    var resized = BIR.Common.ImageUtility.ResizeImage(srcImage, targetWidth, targetHeight, resizeMode);
+                    resized.Save(Path.Combine(destPath, ir.Name), System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+
             }
 
-            MessageBox.Show("Batch omplete", "Notice", MessageBoxButtons.OK);
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (chkClearBatchPost.Checked)
+            {
+                lbBatchFiles.Items.Clear();
+            }
+
+            MessageBox.Show("Batch complete", "Notice", MessageBoxButtons.OK);
         }
     }
 }
