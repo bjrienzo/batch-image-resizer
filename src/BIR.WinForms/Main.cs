@@ -34,7 +34,7 @@ namespace BIR.WinForms
                 lbSourceFiles.DisplayMember = "Name";
                 DirectoryInfo srcFolder = new DirectoryInfo(srcPath);
 
-                foreach (FileInfo fi in srcFolder.GetFiles().Where(fi=> (new string[]{ ".jpg",".png",".bmp",".tif",".jpeg"}).Contains(fi.Extension.ToLower())))
+                foreach (FileInfo fi in srcFolder.GetFiles().Where(fi => (new string[] { ".jpg", ".png", ".bmp", ".tif", ".jpeg" }).Contains(fi.Extension.ToLower())))
                 {
                     lbSourceFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
                 }
