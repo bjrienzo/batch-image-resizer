@@ -140,7 +140,7 @@ namespace BIR.WinForms
             foreach(string file in files)
             {
                 var fi = new FileInfo(file);
-                if (acceptedExtensions.Contains(fi.Extension.ToLower()){
+                if (acceptedExtensions.Contains(fi.Extension.ToLower())){
                     lbBatchFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
                 }
             }
