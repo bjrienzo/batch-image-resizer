@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BIR.Common.Models
-{
-    public class ImageReference
-    {
+namespace BIR.Common.Models {
+    public class ImageReference {
         /// <summary>
         /// Filename with extension
         /// </summary>
@@ -13,9 +11,7 @@ namespace BIR.Common.Models
         /// <summary>
         /// Filename including path
         /// </summary>
-        public string FullName {get;set;}
-
-
-
+        public string FullName { get; set; }
+               
     }
 }

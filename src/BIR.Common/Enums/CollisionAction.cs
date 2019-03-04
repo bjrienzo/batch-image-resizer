@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BIR.Common.Enums
-{
-    public enum CollisionAction
-    {
+namespace BIR.Common.Enums {
+    public enum CollisionAction {
         Skip = 1,
         RenameResize = 2,
         RenameExisting = 3,
