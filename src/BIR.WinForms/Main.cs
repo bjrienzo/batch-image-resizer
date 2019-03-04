@@ -19,6 +19,7 @@ namespace BIR.WinForms
         int targetHeight;
         int targetWidth;
         Common.Enums.ResizeMode resizeMode = Common.Enums.ResizeMode.Contain;
+        Common.Enums.CollisionAction collisionAction = Common.Enums.CollisionAction.Skip;
 
         public Main()
         {
@@ -76,6 +77,7 @@ namespace BIR.WinForms
         private void btnProcess_Click(object sender, EventArgs e)
         {
             bool resizeModeSet = false;
+            bool collisionActionSet = false;
 
             if (!Int32.TryParse(txtHeight.Text, out targetHeight) || !(Int32.TryParse(txtWidth.Text, out targetWidth)))
             {
@@ -104,11 +106,29 @@ namespace BIR.WinForms
                 return;
             }
 
+            foreach (RadioButton rbtn in gbCollisionAction.Controls)
+            {
+                if (rbtn.Checked)
+                {
+                    collisionAction = (Common.Enums.CollisionAction)Convert.ToInt32((rbtn.Tag));
+                    collisionActionSet = true;
+                }
+            }
+
+            if (!collisionActionSet)
+            {
+                MessageBox.Show("Collision Action must be selected", "Error", MessageBoxButtons.OK);
+                return;
+            }
+
             if (bwResizeWorker.IsBusy != true)
             {
                 bwResizeWorker.RunWorkerAsync();
             }
-            
+
+
+
+
         }
 
         private void lbBatchFiles_DragDrop(object sender, DragEventArgs e)
@@ -149,9 +169,23 @@ namespace BIR.WinForms
                 }
                 else
                 {
+
+                    var targetPath = Path.Combine(destPath, ir.Name);
+                    if (File.Exists(targetPath))
+                    {
+                        switch (collisionAction)
+                        {
+                            case Common.Enums.CollisionAction.Skip:
+                                continue;
+                            case Common.Enums.CollisionAction.Overwrite:
+                                File.Delete(targetPath);
+                                break;
+                        }
+                    }
+
                     Image srcImage = Image.FromFile(ir.FullName);
                     var resized = BIR.Common.ImageUtility.ResizeImage(srcImage, targetWidth, targetHeight, resizeMode);
-                    resized.Save(Path.Combine(destPath, ir.Name), System.Drawing.Imaging.ImageFormat.Jpeg);
+                    resized.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
 
             }

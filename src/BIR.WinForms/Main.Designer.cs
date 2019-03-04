@@ -42,24 +42,29 @@
             this.rbtnResizeModeCover = new System.Windows.Forms.RadioButton();
             this.rbtnResizeModeContain = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblBatchFiles = new System.Windows.Forms.Label();
             this.gbOutput = new System.Windows.Forms.GroupBox();
-            this.gbBatch = new System.Windows.Forms.GroupBox();
+            this.gbOptions = new System.Windows.Forms.GroupBox();
             this.chkClearBatchPost = new System.Windows.Forms.CheckBox();
-            this.gbInput = new System.Windows.Forms.GroupBox();
-            this.btnClearBatch = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblOutputPath = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.gbOptions = new System.Windows.Forms.GroupBox();
+            this.gbBatch = new System.Windows.Forms.GroupBox();
+            this.btnClearBatch = new System.Windows.Forms.Button();
+            this.gbInput = new System.Windows.Forms.GroupBox();
             this.bwResizeWorker = new System.ComponentModel.BackgroundWorker();
+            this.gbCollisionAction = new System.Windows.Forms.GroupBox();
+            this.rbtnSkip = new System.Windows.Forms.RadioButton();
+            this.rbtnRename = new System.Windows.Forms.RadioButton();
+            this.rbtnOverwrite = new System.Windows.Forms.RadioButton();
             this.gbResizeMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbOutput.SuspendLayout();
+            this.gbOptions.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.gbBatch.SuspendLayout();
             this.gbInput.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.gbOptions.SuspendLayout();
+            this.gbCollisionAction.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnProcess
@@ -200,6 +205,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dimensions";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(118, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(12, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "x";
+            // 
             // lblBatchFiles
             // 
             this.lblBatchFiles.AutoSize = true;
@@ -210,6 +224,7 @@
             // 
             // gbOutput
             // 
+            this.gbOutput.Controls.Add(this.gbCollisionAction);
             this.gbOutput.Controls.Add(this.gbOptions);
             this.gbOutput.Controls.Add(this.groupBox2);
             this.gbOutput.Controls.Add(this.gbResizeMode);
@@ -222,16 +237,15 @@
             this.gbOutput.TabStop = false;
             this.gbOutput.Text = "Output";
             // 
-            // gbBatch
+            // gbOptions
             // 
-            this.gbBatch.Controls.Add(this.btnClearBatch);
-            this.gbBatch.Controls.Add(this.lbBatchFiles);
-            this.gbBatch.Location = new System.Drawing.Point(208, 7);
-            this.gbBatch.Name = "gbBatch";
-            this.gbBatch.Size = new System.Drawing.Size(200, 331);
-            this.gbBatch.TabIndex = 15;
-            this.gbBatch.TabStop = false;
-            this.gbBatch.Text = "Batch";
+            this.gbOptions.Controls.Add(this.chkClearBatchPost);
+            this.gbOptions.Location = new System.Drawing.Point(9, 184);
+            this.gbOptions.Name = "gbOptions";
+            this.gbOptions.Size = new System.Drawing.Size(247, 47);
+            this.gbOptions.TabIndex = 14;
+            this.gbOptions.TabStop = false;
+            this.gbOptions.Text = "Options";
             // 
             // chkClearBatchPost
             // 
@@ -242,29 +256,6 @@
             this.chkClearBatchPost.TabIndex = 0;
             this.chkClearBatchPost.Text = "Clear batch when done";
             this.chkClearBatchPost.UseVisualStyleBackColor = true;
-            // 
-            // gbInput
-            // 
-            this.gbInput.Controls.Add(this.btnSelectSource);
-            this.gbInput.Controls.Add(this.lbSourceFiles);
-            this.gbInput.Controls.Add(this.btnAddToBatch);
-            this.gbInput.Controls.Add(this.lblBatchFiles);
-            this.gbInput.Location = new System.Drawing.Point(2, 7);
-            this.gbInput.Name = "gbInput";
-            this.gbInput.Size = new System.Drawing.Size(200, 331);
-            this.gbInput.TabIndex = 16;
-            this.gbInput.TabStop = false;
-            this.gbInput.Text = "Input";
-            // 
-            // btnClearBatch
-            // 
-            this.btnClearBatch.Location = new System.Drawing.Point(7, 302);
-            this.btnClearBatch.Name = "btnClearBatch";
-            this.btnClearBatch.Size = new System.Drawing.Size(187, 23);
-            this.btnClearBatch.TabIndex = 4;
-            this.btnClearBatch.Text = "Clear Batch";
-            this.btnClearBatch.UseVisualStyleBackColor = true;
-            this.btnClearBatch.Click += new System.EventHandler(this.btnClearBatch_Click);
             // 
             // groupBox2
             // 
@@ -285,29 +276,92 @@
             this.lblOutputPath.TabIndex = 6;
             this.lblOutputPath.Text = "None Selected";
             // 
-            // label1
+            // gbBatch
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(118, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(12, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "x";
+            this.gbBatch.Controls.Add(this.btnClearBatch);
+            this.gbBatch.Controls.Add(this.lbBatchFiles);
+            this.gbBatch.Location = new System.Drawing.Point(208, 7);
+            this.gbBatch.Name = "gbBatch";
+            this.gbBatch.Size = new System.Drawing.Size(200, 331);
+            this.gbBatch.TabIndex = 15;
+            this.gbBatch.TabStop = false;
+            this.gbBatch.Text = "Batch";
             // 
-            // gbOptions
+            // btnClearBatch
             // 
-            this.gbOptions.Controls.Add(this.chkClearBatchPost);
-            this.gbOptions.Location = new System.Drawing.Point(9, 184);
-            this.gbOptions.Name = "gbOptions";
-            this.gbOptions.Size = new System.Drawing.Size(247, 112);
-            this.gbOptions.TabIndex = 14;
-            this.gbOptions.TabStop = false;
-            this.gbOptions.Text = "Options";
+            this.btnClearBatch.Location = new System.Drawing.Point(7, 302);
+            this.btnClearBatch.Name = "btnClearBatch";
+            this.btnClearBatch.Size = new System.Drawing.Size(187, 23);
+            this.btnClearBatch.TabIndex = 4;
+            this.btnClearBatch.Text = "Clear Batch";
+            this.btnClearBatch.UseVisualStyleBackColor = true;
+            this.btnClearBatch.Click += new System.EventHandler(this.btnClearBatch_Click);
             // 
-            // backgroundWorker1
+            // gbInput
+            // 
+            this.gbInput.Controls.Add(this.btnSelectSource);
+            this.gbInput.Controls.Add(this.lbSourceFiles);
+            this.gbInput.Controls.Add(this.btnAddToBatch);
+            this.gbInput.Controls.Add(this.lblBatchFiles);
+            this.gbInput.Location = new System.Drawing.Point(2, 7);
+            this.gbInput.Name = "gbInput";
+            this.gbInput.Size = new System.Drawing.Size(200, 331);
+            this.gbInput.TabIndex = 16;
+            this.gbInput.TabStop = false;
+            this.gbInput.Text = "Input";
+            // 
+            // bwResizeWorker
             // 
             this.bwResizeWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.bwResizeWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // gbCollisionAvoidance
+            // 
+            this.gbCollisionAction.Controls.Add(this.rbtnOverwrite);
+            this.gbCollisionAction.Controls.Add(this.rbtnRename);
+            this.gbCollisionAction.Controls.Add(this.rbtnSkip);
+            this.gbCollisionAction.Location = new System.Drawing.Point(9, 238);
+            this.gbCollisionAction.Name = "gbCollisionAvoidance";
+            this.gbCollisionAction.Size = new System.Drawing.Size(245, 58);
+            this.gbCollisionAction.TabIndex = 15;
+            this.gbCollisionAction.TabStop = false;
+            this.gbCollisionAction.Text = "Collisions";
+            // 
+            // rbtnSkip
+            // 
+            this.rbtnSkip.AutoSize = true;
+            this.rbtnSkip.Location = new System.Drawing.Point(8, 19);
+            this.rbtnSkip.Name = "rbtnSkip";
+            this.rbtnSkip.Size = new System.Drawing.Size(46, 17);
+            this.rbtnSkip.TabIndex = 0;
+            this.rbtnSkip.TabStop = true;
+            this.rbtnSkip.Tag = "1";
+            this.rbtnSkip.Text = "Skip";
+            this.rbtnSkip.UseVisualStyleBackColor = true;
+            // 
+            // rbtnRename
+            // 
+            this.rbtnRename.AutoSize = true;
+            this.rbtnRename.Location = new System.Drawing.Point(77, 19);
+            this.rbtnRename.Name = "rbtnRename";
+            this.rbtnRename.Size = new System.Drawing.Size(65, 17);
+            this.rbtnRename.TabIndex = 1;
+            this.rbtnRename.TabStop = true;
+            this.rbtnRename.Tag = "2";
+            this.rbtnRename.Text = "Rename";
+            this.rbtnRename.UseVisualStyleBackColor = true;
+            // 
+            // rbtnOverwrite
+            // 
+            this.rbtnOverwrite.AutoSize = true;
+            this.rbtnOverwrite.Location = new System.Drawing.Point(171, 19);
+            this.rbtnOverwrite.Name = "rbtnOverwrite";
+            this.rbtnOverwrite.Size = new System.Drawing.Size(70, 17);
+            this.rbtnOverwrite.TabIndex = 2;
+            this.rbtnOverwrite.TabStop = true;
+            this.rbtnOverwrite.Tag = "4";
+            this.rbtnOverwrite.Text = "Overwrite";
+            this.rbtnOverwrite.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -320,18 +374,21 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Main";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main";
             this.gbResizeMode.ResumeLayout(false);
             this.gbResizeMode.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.gbOutput.ResumeLayout(false);
+            this.gbOptions.ResumeLayout(false);
+            this.gbOptions.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.gbBatch.ResumeLayout(false);
             this.gbInput.ResumeLayout(false);
             this.gbInput.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.gbOptions.ResumeLayout(false);
-            this.gbOptions.PerformLayout();
+            this.gbCollisionAction.ResumeLayout(false);
+            this.gbCollisionAction.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -364,5 +421,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gbOptions;
         private System.ComponentModel.BackgroundWorker bwResizeWorker;
+        private System.Windows.Forms.GroupBox gbCollisionAction;
+        private System.Windows.Forms.RadioButton rbtnOverwrite;
+        private System.Windows.Forms.RadioButton rbtnRename;
+        private System.Windows.Forms.RadioButton rbtnSkip;
     }
 }
