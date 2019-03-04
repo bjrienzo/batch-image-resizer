@@ -312,7 +312,7 @@
             // 
             // bwResizeWorker
             // 
-            this.bwResizeWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.bwResizeWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwResizeWorker_DoWork);
             this.bwResizeWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
             // gbCollisionAvoidance

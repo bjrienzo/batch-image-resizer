@@ -14,6 +14,7 @@ namespace BIR.WinForms
     public partial class Main : Form
     {
 
+        string[] acceptedExtensions = new string[] { ".jpg", ".png", ".bmp", ".tif", ".jpeg" };
         string srcPath;
         string destPath;
         int targetHeight;
@@ -38,7 +39,7 @@ namespace BIR.WinForms
                 lbSourceFiles.DisplayMember = "Name";
                 DirectoryInfo srcFolder = new DirectoryInfo(srcPath);
 
-                foreach (FileInfo fi in srcFolder.GetFiles().Where(fi => (new string[] { ".jpg", ".png", ".bmp", ".tif", ".jpeg" }).Contains(fi.Extension.ToLower())))
+                foreach (FileInfo fi in srcFolder.GetFiles().Where(fi => acceptedExtensions.Contains(fi.Extension.ToLower())))
                 {
                     lbSourceFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
                 }
@@ -139,7 +140,9 @@ namespace BIR.WinForms
             foreach(string file in files)
             {
                 var fi = new FileInfo(file);
-                lbBatchFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
+                if (acceptedExtensions.Contains(fi.Extension.ToLower()){
+                    lbBatchFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
+                }
             }
 
             
@@ -155,7 +158,7 @@ namespace BIR.WinForms
             lbBatchFiles.Items.Clear();
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void bwResizeWorker_DoWork(object sender, DoWorkEventArgs e)
         {
 
             BackgroundWorker worker = sender as BackgroundWorker;
