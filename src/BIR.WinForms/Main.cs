@@ -140,13 +140,24 @@ namespace BIR.WinForms {
                 }
                 else {
 
-                    var targetPath = Path.Combine(destPath, ir.Name);
+                    var workingName = ir.Name;
+
+                    var targetPath = Path.Combine(destPath, workingName);
                     if (File.Exists(targetPath)) {
                         switch (collisionAction) {
                             case Common.Enums.CollisionAction.Skip:
                                 continue;
                             case Common.Enums.CollisionAction.Overwrite:
                                 File.Delete(targetPath);
+                                break;
+                            case Common.Enums.CollisionAction.RenameResize:
+                                workingName = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_"  + ir.Name;
+                                targetPath = Path.Combine(destPath, workingName);
+                                break;
+                            case Common.Enums.CollisionAction.RenameExisting:
+                                var rename = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_" + ir.Name;
+                                var copyPath = Path.Combine(destPath, rename);
+                                File.Move(targetPath, copyPath);
                                 break;
                         }
                     }
