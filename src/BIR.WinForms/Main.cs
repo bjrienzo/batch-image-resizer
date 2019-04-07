@@ -154,6 +154,7 @@ namespace BIR.WinForms {
                     Image srcImage = Image.FromFile(ir.FullName);
                     var resized = BIR.Common.ImageUtility.ResizeImage(srcImage, targetWidth, targetHeight, resizeMode);
                     resized.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    resized.Dispose();
                 }
                 
    
