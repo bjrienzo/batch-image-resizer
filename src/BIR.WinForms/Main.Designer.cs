@@ -267,11 +267,11 @@
             this.rbtnRename.AutoSize = true;
             this.rbtnRename.Location = new System.Drawing.Point(77, 19);
             this.rbtnRename.Name = "rbtnRename";
-            this.rbtnRename.Size = new System.Drawing.Size(65, 17);
+            this.rbtnRename.Size = new System.Drawing.Size(90, 17);
             this.rbtnRename.TabIndex = 1;
             this.rbtnRename.TabStop = true;
             this.rbtnRename.Tag = "2";
-            this.rbtnRename.Text = "Rename";
+            this.rbtnRename.Text = "Rename New";
             this.rbtnRename.UseVisualStyleBackColor = true;
             // 
             // rbtnSkip
