@@ -45,6 +45,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblBatchFiles = new System.Windows.Forms.Label();
             this.gbOutput = new System.Windows.Forms.GroupBox();
+            this.gbCollisionAction = new System.Windows.Forms.GroupBox();
+            this.rbtnOverwrite = new System.Windows.Forms.RadioButton();
+            this.rbtnRename = new System.Windows.Forms.RadioButton();
+            this.rbtnSkip = new System.Windows.Forms.RadioButton();
             this.gbOptions = new System.Windows.Forms.GroupBox();
             this.chkClearBatchPost = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -53,18 +57,15 @@
             this.btnClearBatch = new System.Windows.Forms.Button();
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.bwResizeWorker = new System.ComponentModel.BackgroundWorker();
-            this.gbCollisionAction = new System.Windows.Forms.GroupBox();
-            this.rbtnSkip = new System.Windows.Forms.RadioButton();
-            this.rbtnRename = new System.Windows.Forms.RadioButton();
-            this.rbtnOverwrite = new System.Windows.Forms.RadioButton();
+            this.pbResizeProgress = new System.Windows.Forms.ProgressBar();
             this.gbResizeMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbOutput.SuspendLayout();
+            this.gbCollisionAction.SuspendLayout();
             this.gbOptions.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gbBatch.SuspendLayout();
             this.gbInput.SuspendLayout();
-            this.gbCollisionAction.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnProcess
@@ -237,6 +238,54 @@
             this.gbOutput.TabStop = false;
             this.gbOutput.Text = "Output";
             // 
+            // gbCollisionAction
+            // 
+            this.gbCollisionAction.Controls.Add(this.rbtnOverwrite);
+            this.gbCollisionAction.Controls.Add(this.rbtnRename);
+            this.gbCollisionAction.Controls.Add(this.rbtnSkip);
+            this.gbCollisionAction.Location = new System.Drawing.Point(9, 238);
+            this.gbCollisionAction.Name = "gbCollisionAction";
+            this.gbCollisionAction.Size = new System.Drawing.Size(245, 58);
+            this.gbCollisionAction.TabIndex = 15;
+            this.gbCollisionAction.TabStop = false;
+            this.gbCollisionAction.Text = "Collisions";
+            // 
+            // rbtnOverwrite
+            // 
+            this.rbtnOverwrite.AutoSize = true;
+            this.rbtnOverwrite.Location = new System.Drawing.Point(171, 19);
+            this.rbtnOverwrite.Name = "rbtnOverwrite";
+            this.rbtnOverwrite.Size = new System.Drawing.Size(70, 17);
+            this.rbtnOverwrite.TabIndex = 2;
+            this.rbtnOverwrite.TabStop = true;
+            this.rbtnOverwrite.Tag = "4";
+            this.rbtnOverwrite.Text = "Overwrite";
+            this.rbtnOverwrite.UseVisualStyleBackColor = true;
+            // 
+            // rbtnRename
+            // 
+            this.rbtnRename.AutoSize = true;
+            this.rbtnRename.Location = new System.Drawing.Point(77, 19);
+            this.rbtnRename.Name = "rbtnRename";
+            this.rbtnRename.Size = new System.Drawing.Size(65, 17);
+            this.rbtnRename.TabIndex = 1;
+            this.rbtnRename.TabStop = true;
+            this.rbtnRename.Tag = "2";
+            this.rbtnRename.Text = "Rename";
+            this.rbtnRename.UseVisualStyleBackColor = true;
+            // 
+            // rbtnSkip
+            // 
+            this.rbtnSkip.AutoSize = true;
+            this.rbtnSkip.Location = new System.Drawing.Point(8, 19);
+            this.rbtnSkip.Name = "rbtnSkip";
+            this.rbtnSkip.Size = new System.Drawing.Size(46, 17);
+            this.rbtnSkip.TabIndex = 0;
+            this.rbtnSkip.TabStop = true;
+            this.rbtnSkip.Tag = "1";
+            this.rbtnSkip.Text = "Skip";
+            this.rbtnSkip.UseVisualStyleBackColor = true;
+            // 
             // gbOptions
             // 
             this.gbOptions.Controls.Add(this.chkClearBatchPost);
@@ -312,62 +361,24 @@
             // 
             // bwResizeWorker
             // 
+            this.bwResizeWorker.WorkerReportsProgress = true;
             this.bwResizeWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwResizeWorker_DoWork);
+            this.bwResizeWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwResizeWorker_ProgressChanged);
             this.bwResizeWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // gbCollisionAvoidance
+            // pbResizeProgress
             // 
-            this.gbCollisionAction.Controls.Add(this.rbtnOverwrite);
-            this.gbCollisionAction.Controls.Add(this.rbtnRename);
-            this.gbCollisionAction.Controls.Add(this.rbtnSkip);
-            this.gbCollisionAction.Location = new System.Drawing.Point(9, 238);
-            this.gbCollisionAction.Name = "gbCollisionAvoidance";
-            this.gbCollisionAction.Size = new System.Drawing.Size(245, 58);
-            this.gbCollisionAction.TabIndex = 15;
-            this.gbCollisionAction.TabStop = false;
-            this.gbCollisionAction.Text = "Collisions";
-            // 
-            // rbtnSkip
-            // 
-            this.rbtnSkip.AutoSize = true;
-            this.rbtnSkip.Location = new System.Drawing.Point(8, 19);
-            this.rbtnSkip.Name = "rbtnSkip";
-            this.rbtnSkip.Size = new System.Drawing.Size(46, 17);
-            this.rbtnSkip.TabIndex = 0;
-            this.rbtnSkip.TabStop = true;
-            this.rbtnSkip.Tag = "1";
-            this.rbtnSkip.Text = "Skip";
-            this.rbtnSkip.UseVisualStyleBackColor = true;
-            // 
-            // rbtnRename
-            // 
-            this.rbtnRename.AutoSize = true;
-            this.rbtnRename.Location = new System.Drawing.Point(77, 19);
-            this.rbtnRename.Name = "rbtnRename";
-            this.rbtnRename.Size = new System.Drawing.Size(65, 17);
-            this.rbtnRename.TabIndex = 1;
-            this.rbtnRename.TabStop = true;
-            this.rbtnRename.Tag = "2";
-            this.rbtnRename.Text = "Rename";
-            this.rbtnRename.UseVisualStyleBackColor = true;
-            // 
-            // rbtnOverwrite
-            // 
-            this.rbtnOverwrite.AutoSize = true;
-            this.rbtnOverwrite.Location = new System.Drawing.Point(171, 19);
-            this.rbtnOverwrite.Name = "rbtnOverwrite";
-            this.rbtnOverwrite.Size = new System.Drawing.Size(70, 17);
-            this.rbtnOverwrite.TabIndex = 2;
-            this.rbtnOverwrite.TabStop = true;
-            this.rbtnOverwrite.Tag = "4";
-            this.rbtnOverwrite.Text = "Overwrite";
-            this.rbtnOverwrite.UseVisualStyleBackColor = true;
+            this.pbResizeProgress.Location = new System.Drawing.Point(2, 344);
+            this.pbResizeProgress.Name = "pbResizeProgress";
+            this.pbResizeProgress.Size = new System.Drawing.Size(674, 23);
+            this.pbResizeProgress.TabIndex = 17;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(680, 340);
+            this.ClientSize = new System.Drawing.Size(680, 374);
+            this.Controls.Add(this.pbResizeProgress);
             this.Controls.Add(this.gbInput);
             this.Controls.Add(this.gbBatch);
             this.Controls.Add(this.gbOutput);
@@ -381,14 +392,14 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.gbOutput.ResumeLayout(false);
+            this.gbCollisionAction.ResumeLayout(false);
+            this.gbCollisionAction.PerformLayout();
             this.gbOptions.ResumeLayout(false);
             this.gbOptions.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.gbBatch.ResumeLayout(false);
             this.gbInput.ResumeLayout(false);
             this.gbInput.PerformLayout();
-            this.gbCollisionAction.ResumeLayout(false);
-            this.gbCollisionAction.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -425,5 +436,6 @@
         private System.Windows.Forms.RadioButton rbtnOverwrite;
         private System.Windows.Forms.RadioButton rbtnRename;
         private System.Windows.Forms.RadioButton rbtnSkip;
+        private System.Windows.Forms.ProgressBar pbResizeProgress;
     }
 }

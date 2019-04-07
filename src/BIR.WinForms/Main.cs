@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BIR.WinForms {
@@ -132,7 +129,11 @@ namespace BIR.WinForms {
 
             BackgroundWorker worker = sender as BackgroundWorker;
 
+            decimal i = 0;
+
             foreach (BIR.Common.Models.ImageReference ir in lbBatchFiles.Items) {
+                worker.ReportProgress(Convert.ToInt16((++i / lbBatchFiles.Items.Count) * 100));
+
                 if (worker.CancellationPending == true) {
                     e.Cancel = true;
                     break;
@@ -154,6 +155,8 @@ namespace BIR.WinForms {
                     var resized = BIR.Common.ImageUtility.ResizeImage(srcImage, targetWidth, targetHeight, resizeMode);
                     resized.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
+                
+   
             }
         }
 
@@ -163,6 +166,12 @@ namespace BIR.WinForms {
             }
 
             MessageBox.Show("Batch complete", "Notice", MessageBoxButtons.OK);
+        }
+
+        private void bwResizeWorker_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+
+            pbResizeProgress.Value = e.ProgressPercentage;
+                                 
         }
     }
 }
