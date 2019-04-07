@@ -5,12 +5,10 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Text;
 
-namespace BIR.Common
-{
+namespace BIR.Common {
 
-    public class ImageUtility
-    {
-        
+    public class ImageUtility {
+
         /// <summary>
         /// Resize a source image to the target dimensions, based on the resize mode
         /// </summary>
@@ -19,8 +17,7 @@ namespace BIR.Common
         /// <param name="height">Target desired Height</param>
         /// <param name="mode">Resize Mode</param>
         /// <returns>Resized Image</returns>
-        public static Bitmap ResizeImage(Image image, int width, int height, Enums.ResizeMode mode)
-        {
+        public static Bitmap ResizeImage(Image image, int width, int height, Enums.ResizeMode mode) {
 
             Rectangle destRect;
             Bitmap destImage = null;
@@ -33,8 +30,7 @@ namespace BIR.Common
             var heightRatio = (double)height / image.Height;
             double ratio = 0;
 
-            switch (mode)
-            {
+            switch (mode) {
                 case Enums.ResizeMode.Stretch:
                     //Resize image with no regard for life or limb
                     destRect = new Rectangle(0, 0, width, height);
@@ -73,16 +69,14 @@ namespace BIR.Common
 
             //destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
-            using (var graphics = Graphics.FromImage(destImage))
-            {
+            using (var graphics = Graphics.FromImage(destImage)) {
                 graphics.CompositingMode = CompositingMode.SourceCopy;
                 graphics.CompositingQuality = CompositingQuality.HighQuality;
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                using (var wrapMode = new ImageAttributes())
-                {
+                using (var wrapMode = new ImageAttributes()) {
                     wrapMode.SetWrapMode(WrapMode.TileFlipXY);
                     graphics.DrawImage(image, destRect, xPos, yPos, cropWidth, cropHeight, GraphicsUnit.Pixel, wrapMode);
                 }
