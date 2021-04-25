@@ -89,7 +89,7 @@ namespace BIR.WinForms {
             }
 
             foreach (RadioButton rbtn in gbCollisionAction.Controls) {
-                if (rbtn.Checked) { //If I switch to Core, I can use the much nicer switch statement :/
+                if (rbtn.Checked) {
                     collisionAction = (Common.Enums.CollisionAction)Convert.ToInt32((rbtn.Tag));
                     collisionActionSet = true;
                 }
@@ -129,14 +129,18 @@ namespace BIR.WinForms {
             BackgroundWorker worker = sender as BackgroundWorker;
 
             decimal i = 0;
-            foreach (BIR.Common.Models.ImageReference ir in lbBatchFiles.Items) {
+            
+            Parallel.ForEach(lbBatchFiles.Items.Cast<ImageReference>(), ir =>
+            {
                 worker.ReportProgress(Convert.ToInt16((++i / lbBatchFiles.Items.Count) * 100));
 
-                if (worker.CancellationPending == true) {
+                if (worker.CancellationPending == true)
+                {
                     e.Cancel = true;
-                    break;
+                    return;
                 }
-                else {
+                else
+                {
                     try
                     {
 
@@ -151,13 +155,13 @@ namespace BIR.WinForms {
                         {
                             targetPath = Path.Combine(destPath, ir.Name);
                         }
-                        
+
                         if (File.Exists(targetPath))
                         {
                             switch (collisionAction)
                             {
                                 case Common.Enums.CollisionAction.Skip:
-                                    continue;
+                                    return;
                                 case Common.Enums.CollisionAction.Overwrite:
                                     File.Delete(targetPath);
                                     break;
@@ -188,7 +192,7 @@ namespace BIR.WinForms {
                                     Format = MagickFormat.Jpg,
                                 };
                                 original.Write(ir.FullName.Replace(".heic", ".jpg"));
-                                System.IO.File.Delete(ir.FullName);
+                                System.IO.File.Delete(ir.FullName); //Yeah, its fine, they're my pictures
                             }
                             ir.FullName = ir.FullName.Replace(".heic", ".jpg");
                         }
@@ -218,7 +222,6 @@ namespace BIR.WinForms {
                             using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
                             {
                                 var encodeFormat = SKEncodedImageFormat.Jpeg;
-
                                 var data = resizedImage.Encode(encodeFormat, 90);
 
                                 using var resizedFile = System.IO.File.Create(targetPath);
@@ -226,15 +229,11 @@ namespace BIR.WinForms {
                             };
 
                         }
-
                         bitmap.Dispose();
-
                     }
                     catch {/*Don't care right now*/ }
                 }
-                
-   
-            }
+            });
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
