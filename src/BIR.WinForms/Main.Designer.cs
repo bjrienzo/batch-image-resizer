@@ -136,7 +136,7 @@
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(77, 20);
             this.txtHeight.TabIndex = 1;
-            this.txtHeight.Text = "Height";
+            this.txtHeight.Text = "1024";
             // 
             // txtWidth
             // 
@@ -144,7 +144,7 @@
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(77, 20);
             this.txtWidth.TabIndex = 0;
-            this.txtWidth.Text = "Width";
+            this.txtWidth.Text = "1024";
             // 
             // rbtnResizeModeStretch
             // 
@@ -153,7 +153,6 @@
             this.rbtnResizeModeStretch.Name = "rbtnResizeModeStretch";
             this.rbtnResizeModeStretch.Size = new System.Drawing.Size(59, 17);
             this.rbtnResizeModeStretch.TabIndex = 10;
-            this.rbtnResizeModeStretch.TabStop = true;
             this.rbtnResizeModeStretch.Tag = "3";
             this.rbtnResizeModeStretch.Text = "Stretch";
             this.rbtnResizeModeStretch.UseVisualStyleBackColor = true;
@@ -177,7 +176,6 @@
             this.rbtnResizeModeCover.Name = "rbtnResizeModeCover";
             this.rbtnResizeModeCover.Size = new System.Drawing.Size(53, 17);
             this.rbtnResizeModeCover.TabIndex = 12;
-            this.rbtnResizeModeCover.TabStop = true;
             this.rbtnResizeModeCover.Tag = "1";
             this.rbtnResizeModeCover.Text = "Cover";
             this.rbtnResizeModeCover.UseVisualStyleBackColor = true;
@@ -185,6 +183,7 @@
             // rbtnResizeModeContain
             // 
             this.rbtnResizeModeContain.AutoSize = true;
+            this.rbtnResizeModeContain.Checked = true;
             this.rbtnResizeModeContain.Location = new System.Drawing.Point(6, 19);
             this.rbtnResizeModeContain.Name = "rbtnResizeModeContain";
             this.rbtnResizeModeContain.Size = new System.Drawing.Size(61, 17);
@@ -257,7 +256,6 @@
             this.rbtnOverwrite.Name = "rbtnOverwrite";
             this.rbtnOverwrite.Size = new System.Drawing.Size(70, 17);
             this.rbtnOverwrite.TabIndex = 2;
-            this.rbtnOverwrite.TabStop = true;
             this.rbtnOverwrite.Tag = "4";
             this.rbtnOverwrite.Text = "Overwrite";
             this.rbtnOverwrite.UseVisualStyleBackColor = true;
@@ -267,16 +265,16 @@
             this.rbtnRename.AutoSize = true;
             this.rbtnRename.Location = new System.Drawing.Point(77, 19);
             this.rbtnRename.Name = "rbtnRename";
-            this.rbtnRename.Size = new System.Drawing.Size(65, 17);
+            this.rbtnRename.Size = new System.Drawing.Size(90, 17);
             this.rbtnRename.TabIndex = 1;
-            this.rbtnRename.TabStop = true;
             this.rbtnRename.Tag = "2";
-            this.rbtnRename.Text = "Rename";
+            this.rbtnRename.Text = "Rename New";
             this.rbtnRename.UseVisualStyleBackColor = true;
             // 
             // rbtnSkip
             // 
             this.rbtnSkip.AutoSize = true;
+            this.rbtnSkip.Checked = true;
             this.rbtnSkip.Location = new System.Drawing.Point(8, 19);
             this.rbtnSkip.Name = "rbtnSkip";
             this.rbtnSkip.Size = new System.Drawing.Size(46, 17);
