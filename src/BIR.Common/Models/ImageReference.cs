@@ -12,11 +12,6 @@ namespace BIR.Common.Models {
         /// Filename including path
         /// </summary>
         public string FullName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string RelativePath { get; set; }
                
     }
 }
