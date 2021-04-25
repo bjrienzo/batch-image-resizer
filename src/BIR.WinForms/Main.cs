@@ -44,7 +44,7 @@ namespace BIR.WinForms {
 
             foreach (FileInfo fi in srcFolder.GetFiles().Where(fi => acceptedExtensions.Contains(fi.Extension.ToLower())))
             {
-                lbSourceFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName, RootPath = srcPath });
+                lbSourceFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, DirectoryPath = fi.DirectoryName, RootPath = srcPath });
             }
 
             foreach(DirectoryInfo di in srcFolder.GetDirectories())
@@ -111,7 +111,7 @@ namespace BIR.WinForms {
             foreach (string file in files) {
                 var fi = new FileInfo(file);
                 if (acceptedExtensions.Contains(fi.Extension.ToLower())) {
-                    lbBatchFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
+                    lbBatchFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, DirectoryPath = fi.FullName });
                 }
             }
         }
@@ -144,18 +144,18 @@ namespace BIR.WinForms {
                     try
                     {
 
-                        var workingName = ir.Name;
+                        //Determine name for target file
+                        var rootName = Path.GetFileNameWithoutExtension(ir.DirectoryPath);
+                        var resizeName = $"{rootName}_{txtWidth.Text}_{txtHeight.Text}.jpg";
+                        var sourcePath = Path.Combine(ir.DirectoryPath, ir.Name);
+                        
+                        //Determine full path for the target file
+                        string targetPath = chkMaintainRelativePath.Checked switch {
+                            true => Path.Combine(destPath, ir.DirectoryPath.Replace(ir.RootPath + "\\", ""), resizeName),
+                            false => Path.Combine(destPath, resizeName)
+                        };
 
-                        string targetPath;
-                        if (chkMaintainRelativePath.Checked)
-                        {
-                            targetPath = Path.Combine(destPath, ir.FullName.Replace(ir.RootPath + "\\", ""));
-                        }
-                        else
-                        {
-                            targetPath = Path.Combine(destPath, ir.Name);
-                        }
-
+                        //Check for the existence of a file already in that path and apply the chosen action
                         if (File.Exists(targetPath))
                         {
                             switch (collisionAction)
@@ -166,8 +166,8 @@ namespace BIR.WinForms {
                                     File.Delete(targetPath);
                                     break;
                                 case Common.Enums.CollisionAction.RenameResize:
-                                    workingName = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_" + ir.Name;
-                                    targetPath = Path.Combine(destPath, workingName);
+                                    resizeName = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_" + ir.Name;
+                                    targetPath = Path.Combine(destPath, resizeName);
                                     break;
                                 case Common.Enums.CollisionAction.RenameExisting:
                                     var rename = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_" + ir.Name;
@@ -177,33 +177,32 @@ namespace BIR.WinForms {
                             }
                         }
 
+                        //If the target directory doesn't exist, create it
                         var targetDir = new FileInfo(targetPath).Directory;
                         if (!targetDir.Exists) { System.IO.Directory.CreateDirectory(targetDir.FullName); }
 
-                        //Check to see if the source file is an heic, if so convert it to a jpeg
-                        //ImageMagick Performance was unnaceptable for some reason during the resize process, so limiting use.
-                        //I don't need answers, I need results
-                        if (ir.FullName.EndsWith(".heic"))
+                        //If the source is an heic, convert it to jpg please. Thank you Apple.
+                        if (sourcePath.EndsWith(".heic"))
                         {
-                            if (System.IO.File.Exists(ir.FullName))
+                            if (System.IO.File.Exists(sourcePath))
                             {
-                                using MagickImage original = new(ir.FullName)
+                                using MagickImage original = new(sourcePath)
                                 {
                                     Format = MagickFormat.Jpg,
                                 };
-                                original.Write(ir.FullName.Replace(".heic", ".jpg"));
-                                System.IO.File.Delete(ir.FullName); //Yeah, its fine, they're my pictures
+                                original.Write(sourcePath.Replace(".heic", ".jpg"));
+                                System.IO.File.Delete(sourcePath); //Yeah, its fine, they're my pictures
                             }
-                            ir.FullName = ir.FullName.Replace(".heic", ".jpg");
+                            sourcePath = sourcePath.Replace(".heic", ".jpg");
                         }
 
-                        using var fileStream = System.IO.File.Open(ir.FullName, FileMode.Open);
-                        using var bmp = LoadBitmap(fileStream, out SKEncodedOrigin origin);
-                        SKBitmap bitmap = bmp;
+                        //Open the the source file for processing
+                        using var fileStream = System.IO.File.Open(sourcePath, FileMode.Open);
+                        using SKBitmap bitmap = LoadBitmap(fileStream, out SKEncodedOrigin origin);
 
+                        //Determine how the image will best fit within the target dimensions
                         var bitmapRatio = (float)bitmap.Width / bitmap.Height;
                         var resizeRatio = (float)targetWidth / targetHeight;
-
                         if (bitmapRatio > resizeRatio)
                         { // original is more "landscape"
                             targetHeight = (int)Math.Round(bitmap.Height * ((float)targetWidth / bitmap.Width));
@@ -213,23 +212,15 @@ namespace BIR.WinForms {
                             targetWidth = (int)Math.Round(bitmap.Width * ((float)targetHeight / bitmap.Height));
                         }
 
+                        //Finally, let's do the resize
                         var resizedImageInfo = new SKImageInfo(targetWidth, targetHeight, SKImageInfo.PlatformColorType, bitmap.AlphaType);
-
-                        using (var resizedBmp = bitmap.Resize(resizedImageInfo, SKFilterQuality.High))
-                        {
-
-                            SKBitmap resizedBitmap = resizedBmp;
-                            using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
-                            {
-                                var encodeFormat = SKEncodedImageFormat.Jpeg;
-                                var data = resizedImage.Encode(encodeFormat, 90);
-
-                                using var resizedFile = System.IO.File.Create(targetPath);
-                                data.SaveTo(resizedFile);
-                            };
-
-                        }
-                        bitmap.Dispose();
+                        using SKBitmap resizedBitmap = bitmap.Resize(resizedImageInfo, SKFilterQuality.High);
+                        using var resizedImage = SKImage.FromBitmap(resizedBitmap);
+                        var encodeFormat = SKEncodedImageFormat.Jpeg;
+                        var data = resizedImage.Encode(encodeFormat, 90);
+                        using var resizedFile = System.IO.File.Create(targetPath);
+                        data.SaveTo(resizedFile);
+                        
                     }
                     catch {/*Don't care right now*/ }
                 }
