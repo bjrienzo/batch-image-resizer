@@ -17,6 +17,7 @@ namespace BIR.WinForms {
         readonly string[] acceptedExtensions = new string[] { ".jpg", ".png", ".bmp", ".tif", ".jpeg", ".heic" };
         string srcPath; //This needs to be rethought, there is no requirement for the srcpath to stay the same
         string destPath;
+        object baseResize; //This feels gross, but if it works then fine for now
 
         Common.Enums.CollisionAction collisionAction = Common.Enums.CollisionAction.Skip;
 
@@ -94,6 +95,8 @@ namespace BIR.WinForms {
                 return;
             }
 
+            baseResize = lbDimensions.SelectedItem;
+
             if (bwResizeWorker.IsBusy != true) {
                 bwResizeWorker.RunWorkerAsync();
             }
@@ -122,6 +125,8 @@ namespace BIR.WinForms {
 
             BackgroundWorker worker = sender as BackgroundWorker;
 
+            
+
             decimal i = 0;
             
             var result = Parallel.ForEach(lbBatchFiles.Items.Cast<ImageReference>(), ir =>
@@ -145,7 +150,17 @@ namespace BIR.WinForms {
                             var rootName = Path.GetFileNameWithoutExtension(ir.Name);
                             var targetWidth = resize.TargetWidth;
                             var targetHeight = resize.TargetHeight;
-                            var resizeName = $"{rootName}_{targetWidth}x{targetHeight}.jpg";
+
+                            string resizeName;
+                            if (baseResize != null && baseResize == resize)
+                            {
+                                resizeName = $"{rootName}.jpg";
+                            }
+                            else
+                            {
+                                resizeName = $"{rootName}_{targetWidth}x{targetHeight}.jpg";
+                            }
+                            
                             var sourcePath = Path.Combine(ir.DirectoryPath, ir.Name);
 
                             //Determine full path for the target file
@@ -270,16 +285,23 @@ namespace BIR.WinForms {
 
         private void btnAddDimension_Click(object sender, EventArgs e)
         {
-
-            if (int.TryParse(txtWidth.Text, out int width) && int.TryParse(txtHeight.Text, out int height))
+            lbDimensions.DisplayMember = "DisplayText"; //We'll do it live
+            if (int.TryParse(txtWidth.Text, out int width))
             {
-                lbDimensions.DisplayMember = "DisplayText"; //We'll do it live
-                lbDimensions.Items.Add(new ResizeParameter(width,height));
-                txtWidth.Text = "";
-                txtHeight.Text = "";
+                if (int.TryParse(txtHeight.Text, out int height))
+                {
+                    lbDimensions.Items.Add(new ResizeParameter(width, height));
+                    txtWidth.Text = "";
+                    txtHeight.Text = "";
+                }
+                else
+                {
+                    lbDimensions.Items.Add(new ResizeParameter(width, width));
+                    txtWidth.Text = "";
+                    txtHeight.Text = "";
+                }
             }
             
-
         }
     }
 }

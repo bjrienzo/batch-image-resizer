@@ -38,6 +38,8 @@
             this.txtHeight = new System.Windows.Forms.TextBox();
             this.txtWidth = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnAddDimension = new System.Windows.Forms.Button();
+            this.lbDimensions = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblBatchFiles = new System.Windows.Forms.Label();
             this.gbOutput = new System.Windows.Forms.GroupBox();
@@ -55,8 +57,6 @@
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.bwResizeWorker = new System.ComponentModel.BackgroundWorker();
             this.pbResizeProgress = new System.Windows.Forms.ProgressBar();
-            this.lbDimensions = new System.Windows.Forms.ListBox();
-            this.btnAddDimension = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.gbOutput.SuspendLayout();
             this.gbCollisionAction.SuspendLayout();
@@ -169,6 +169,25 @@
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dimensions";
+            // 
+            // btnAddDimension
+            // 
+            this.btnAddDimension.Location = new System.Drawing.Point(142, 22);
+            this.btnAddDimension.Name = "btnAddDimension";
+            this.btnAddDimension.Size = new System.Drawing.Size(75, 23);
+            this.btnAddDimension.TabIndex = 11;
+            this.btnAddDimension.Text = "Add";
+            this.btnAddDimension.UseVisualStyleBackColor = true;
+            this.btnAddDimension.Click += new System.EventHandler(this.btnAddDimension_Click);
+            // 
+            // lbDimensions
+            // 
+            this.lbDimensions.FormattingEnabled = true;
+            this.lbDimensions.ItemHeight = 15;
+            this.lbDimensions.Location = new System.Drawing.Point(7, 50);
+            this.lbDimensions.Name = "lbDimensions";
+            this.lbDimensions.Size = new System.Drawing.Size(274, 64);
+            this.lbDimensions.TabIndex = 10;
             // 
             // label1
             // 
@@ -367,25 +386,6 @@
             this.pbResizeProgress.Name = "pbResizeProgress";
             this.pbResizeProgress.Size = new System.Drawing.Size(786, 27);
             this.pbResizeProgress.TabIndex = 17;
-            // 
-            // lbDimensions
-            // 
-            this.lbDimensions.FormattingEnabled = true;
-            this.lbDimensions.ItemHeight = 15;
-            this.lbDimensions.Location = new System.Drawing.Point(7, 50);
-            this.lbDimensions.Name = "lbDimensions";
-            this.lbDimensions.Size = new System.Drawing.Size(274, 64);
-            this.lbDimensions.TabIndex = 10;
-            // 
-            // btnAddDimension
-            // 
-            this.btnAddDimension.Location = new System.Drawing.Point(142, 21);
-            this.btnAddDimension.Name = "btnAddDimension";
-            this.btnAddDimension.Size = new System.Drawing.Size(75, 23);
-            this.btnAddDimension.TabIndex = 11;
-            this.btnAddDimension.Text = "Add";
-            this.btnAddDimension.UseVisualStyleBackColor = true;
-            this.btnAddDimension.Click += new System.EventHandler(this.btnAddDimension_Click);
             // 
             // Main
             // 
