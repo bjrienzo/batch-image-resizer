@@ -37,10 +37,6 @@
             this.btnSelectOutputFolder = new System.Windows.Forms.Button();
             this.txtHeight = new System.Windows.Forms.TextBox();
             this.txtWidth = new System.Windows.Forms.TextBox();
-            this.rbtnResizeModeStretch = new System.Windows.Forms.RadioButton();
-            this.gbResizeMode = new System.Windows.Forms.GroupBox();
-            this.rbtnResizeModeCover = new System.Windows.Forms.RadioButton();
-            this.rbtnResizeModeContain = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblBatchFiles = new System.Windows.Forms.Label();
@@ -59,7 +55,8 @@
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.bwResizeWorker = new System.ComponentModel.BackgroundWorker();
             this.pbResizeProgress = new System.Windows.Forms.ProgressBar();
-            this.gbResizeMode.SuspendLayout();
+            this.lbDimensions = new System.Windows.Forms.ListBox();
+            this.btnAddDimension = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.gbOutput.SuspendLayout();
             this.gbCollisionAction.SuspendLayout();
@@ -141,77 +138,26 @@
             // 
             // txtHeight
             // 
-            this.txtHeight.Location = new System.Drawing.Point(173, 22);
+            this.txtHeight.Location = new System.Drawing.Point(85, 21);
             this.txtHeight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtHeight.Name = "txtHeight";
-            this.txtHeight.Size = new System.Drawing.Size(89, 23);
+            this.txtHeight.Size = new System.Drawing.Size(50, 23);
             this.txtHeight.TabIndex = 1;
             this.txtHeight.Text = "1024";
             // 
             // txtWidth
             // 
-            this.txtWidth.Location = new System.Drawing.Point(26, 22);
+            this.txtWidth.Location = new System.Drawing.Point(7, 21);
             this.txtWidth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtWidth.Name = "txtWidth";
-            this.txtWidth.Size = new System.Drawing.Size(89, 23);
+            this.txtWidth.Size = new System.Drawing.Size(49, 23);
             this.txtWidth.TabIndex = 0;
             this.txtWidth.Text = "1024";
             // 
-            // rbtnResizeModeStretch
-            // 
-            this.rbtnResizeModeStretch.AutoSize = true;
-            this.rbtnResizeModeStretch.Location = new System.Drawing.Point(212, 22);
-            this.rbtnResizeModeStretch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rbtnResizeModeStretch.Name = "rbtnResizeModeStretch";
-            this.rbtnResizeModeStretch.Size = new System.Drawing.Size(62, 19);
-            this.rbtnResizeModeStretch.TabIndex = 10;
-            this.rbtnResizeModeStretch.Tag = "3";
-            this.rbtnResizeModeStretch.Text = "Stretch";
-            this.rbtnResizeModeStretch.UseVisualStyleBackColor = true;
-            // 
-            // gbResizeMode
-            // 
-            this.gbResizeMode.Controls.Add(this.rbtnResizeModeCover);
-            this.gbResizeMode.Controls.Add(this.rbtnResizeModeContain);
-            this.gbResizeMode.Controls.Add(this.rbtnResizeModeStretch);
-            this.gbResizeMode.Enabled = false;
-            this.gbResizeMode.Location = new System.Drawing.Point(10, 171);
-            this.gbResizeMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gbResizeMode.Name = "gbResizeMode";
-            this.gbResizeMode.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gbResizeMode.Size = new System.Drawing.Size(288, 55);
-            this.gbResizeMode.TabIndex = 11;
-            this.gbResizeMode.TabStop = false;
-            this.gbResizeMode.Text = "Resize Mode";
-            // 
-            // rbtnResizeModeCover
-            // 
-            this.rbtnResizeModeCover.AutoSize = true;
-            this.rbtnResizeModeCover.Location = new System.Drawing.Point(119, 22);
-            this.rbtnResizeModeCover.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rbtnResizeModeCover.Name = "rbtnResizeModeCover";
-            this.rbtnResizeModeCover.Size = new System.Drawing.Size(56, 19);
-            this.rbtnResizeModeCover.TabIndex = 12;
-            this.rbtnResizeModeCover.Tag = "1";
-            this.rbtnResizeModeCover.Text = "Cover";
-            this.rbtnResizeModeCover.UseVisualStyleBackColor = true;
-            // 
-            // rbtnResizeModeContain
-            // 
-            this.rbtnResizeModeContain.AutoSize = true;
-            this.rbtnResizeModeContain.Checked = true;
-            this.rbtnResizeModeContain.Location = new System.Drawing.Point(7, 22);
-            this.rbtnResizeModeContain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rbtnResizeModeContain.Name = "rbtnResizeModeContain";
-            this.rbtnResizeModeContain.Size = new System.Drawing.Size(67, 19);
-            this.rbtnResizeModeContain.TabIndex = 11;
-            this.rbtnResizeModeContain.TabStop = true;
-            this.rbtnResizeModeContain.Tag = "2";
-            this.rbtnResizeModeContain.Text = "Contain";
-            this.rbtnResizeModeContain.UseVisualStyleBackColor = true;
-            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnAddDimension);
+            this.groupBox1.Controls.Add(this.lbDimensions);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtWidth);
             this.groupBox1.Controls.Add(this.txtHeight);
@@ -219,7 +165,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(288, 59);
+            this.groupBox1.Size = new System.Drawing.Size(288, 123);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dimensions";
@@ -227,7 +173,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(138, 25);
+            this.label1.Location = new System.Drawing.Point(64, 25);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(13, 15);
@@ -248,7 +194,6 @@
             this.gbOutput.Controls.Add(this.gbCollisionAction);
             this.gbOutput.Controls.Add(this.gbOptions);
             this.gbOutput.Controls.Add(this.groupBox2);
-            this.gbOutput.Controls.Add(this.gbResizeMode);
             this.gbOutput.Controls.Add(this.groupBox1);
             this.gbOutput.Controls.Add(this.btnProcess);
             this.gbOutput.Location = new System.Drawing.Point(483, 8);
@@ -423,6 +368,25 @@
             this.pbResizeProgress.Size = new System.Drawing.Size(786, 27);
             this.pbResizeProgress.TabIndex = 17;
             // 
+            // lbDimensions
+            // 
+            this.lbDimensions.FormattingEnabled = true;
+            this.lbDimensions.ItemHeight = 15;
+            this.lbDimensions.Location = new System.Drawing.Point(7, 50);
+            this.lbDimensions.Name = "lbDimensions";
+            this.lbDimensions.Size = new System.Drawing.Size(274, 64);
+            this.lbDimensions.TabIndex = 10;
+            // 
+            // btnAddDimension
+            // 
+            this.btnAddDimension.Location = new System.Drawing.Point(142, 21);
+            this.btnAddDimension.Name = "btnAddDimension";
+            this.btnAddDimension.Size = new System.Drawing.Size(75, 23);
+            this.btnAddDimension.TabIndex = 11;
+            this.btnAddDimension.Text = "Add";
+            this.btnAddDimension.UseVisualStyleBackColor = true;
+            this.btnAddDimension.Click += new System.EventHandler(this.btnAddDimension_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -438,8 +402,6 @@
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Batch Image Resizer";
-            this.gbResizeMode.ResumeLayout(false);
-            this.gbResizeMode.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.gbOutput.ResumeLayout(false);
@@ -468,10 +430,6 @@
         private System.Windows.Forms.Button btnSelectOutputFolder;
         private System.Windows.Forms.TextBox txtHeight;
         private System.Windows.Forms.TextBox txtWidth;
-        private System.Windows.Forms.RadioButton rbtnResizeModeStretch;
-        private System.Windows.Forms.GroupBox gbResizeMode;
-        private System.Windows.Forms.RadioButton rbtnResizeModeContain;
-        private System.Windows.Forms.RadioButton rbtnResizeModeCover;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblBatchFiles;
         private System.Windows.Forms.GroupBox gbOutput;
@@ -490,5 +448,7 @@
         private System.Windows.Forms.RadioButton rbtnSkip;
         private System.Windows.Forms.ProgressBar pbResizeProgress;
         private System.Windows.Forms.CheckBox chkMaintainRelativePath;
+        private System.Windows.Forms.Button btnAddDimension;
+        private System.Windows.Forms.ListBox lbDimensions;
     }
 }

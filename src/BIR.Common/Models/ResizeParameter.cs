@@ -7,8 +7,17 @@ namespace BIR.Common.Models
     public class ResizeParameter
     {
 
-        public int TargetWidth { get; set; }
-        public int TargetHeight { get; set; }
+        public int TargetWidth { get;  }
+        public int TargetHeight { get; }
+
+        public ResizeParameter(int width, int height)
+        {
+            TargetWidth = width;
+            TargetHeight = height;
+        }
+
+        public string DisplayText => $"{TargetWidth}x{TargetHeight}";
+
 
     }
 }
