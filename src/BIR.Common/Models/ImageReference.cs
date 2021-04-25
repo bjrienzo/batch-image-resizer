@@ -13,5 +13,9 @@ namespace BIR.Common.Models {
         /// </summary>
         public string FullName { get; set; }
                
+        /// <summary>
+        /// The root path that was active when adding this image, will be used for building relative folder structures
+        /// </summary>
+        public string RootPath { get; set; }
     }
 }

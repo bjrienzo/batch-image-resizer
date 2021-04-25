@@ -1,18 +1,21 @@
-﻿using ImageMagick;
+﻿using BIR.Common.Models;
+using ImageMagick;
 using SkiaSharp;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BIR.WinForms {
     public partial class Main : Form {
 
-        string[] acceptedExtensions = new string[] { ".jpg", ".png", ".bmp", ".tif", ".jpeg" };
-        string srcPath;
+        readonly string[] acceptedExtensions = new string[] { ".jpg", ".png", ".bmp", ".tif", ".jpeg", ".heic" };
+        string srcPath; //This needs to be rethought, there is no requirement for the srcpath to stay the same
         string destPath;
         int targetHeight;
         int targetWidth;
@@ -43,7 +46,7 @@ namespace BIR.WinForms {
 
             foreach (FileInfo fi in srcFolder.GetFiles().Where(fi => acceptedExtensions.Contains(fi.Extension.ToLower())))
             {
-                lbSourceFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
+                lbSourceFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName, RootPath = srcPath });
             }
 
             foreach(DirectoryInfo di in srcFolder.GetDirectories())
@@ -102,7 +105,7 @@ namespace BIR.WinForms {
             }
 
             foreach (RadioButton rbtn in gbCollisionAction.Controls) {
-                if (rbtn.Checked) {
+                if (rbtn.Checked) { //If I switch to Core, I can use the much nicer switch statement :/
                     collisionAction = (Common.Enums.CollisionAction)Convert.ToInt32((rbtn.Tag));
                     collisionActionSet = true;
                 }
@@ -146,7 +149,6 @@ namespace BIR.WinForms {
             BackgroundWorker worker = sender as BackgroundWorker;
 
             decimal i = 0;
-
             foreach (BIR.Common.Models.ImageReference ir in lbBatchFiles.Items) {
                 worker.ReportProgress(Convert.ToInt16((++i / lbBatchFiles.Items.Count) * 100));
 
@@ -158,10 +160,18 @@ namespace BIR.WinForms {
                     try
                     {
 
-
                         var workingName = ir.Name;
 
-                        var targetPath = Path.Combine(destPath, ir.FullName.Replace(srcPath + "\\", ""));
+                        string targetPath;
+                        if (chkMaintainRelativePath.Checked)
+                        {
+                            targetPath = Path.Combine(destPath, ir.FullName.Replace(ir.RootPath + "\\", ""));
+                        }
+                        else
+                        {
+                            targetPath = Path.Combine(destPath, ir.Name);
+                        }
+                        
                         if (File.Exists(targetPath))
                         {
                             switch (collisionAction)

@@ -58,6 +58,7 @@
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.bwResizeWorker = new System.ComponentModel.BackgroundWorker();
             this.pbResizeProgress = new System.Windows.Forms.ProgressBar();
+            this.chkMaintainRelativePath = new System.Windows.Forms.CheckBox();
             this.gbResizeMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbOutput.SuspendLayout();
@@ -70,7 +71,7 @@
             // 
             // btnProcess
             // 
-            this.btnProcess.Location = new System.Drawing.Point(9, 302);
+            this.btnProcess.Location = new System.Drawing.Point(9, 321);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(247, 23);
             this.btnProcess.TabIndex = 0;
@@ -95,7 +96,7 @@
             this.lbSourceFiles.Location = new System.Drawing.Point(6, 48);
             this.lbSourceFiles.Name = "lbSourceFiles";
             this.lbSourceFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSourceFiles.Size = new System.Drawing.Size(188, 251);
+            this.lbSourceFiles.Size = new System.Drawing.Size(188, 264);
             this.lbSourceFiles.TabIndex = 1;
             // 
             // lbBatchFiles
@@ -105,14 +106,14 @@
             this.lbBatchFiles.FormattingEnabled = true;
             this.lbBatchFiles.Location = new System.Drawing.Point(7, 19);
             this.lbBatchFiles.Name = "lbBatchFiles";
-            this.lbBatchFiles.Size = new System.Drawing.Size(187, 277);
+            this.lbBatchFiles.Size = new System.Drawing.Size(187, 290);
             this.lbBatchFiles.TabIndex = 3;
             this.lbBatchFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.lbBatchFiles_DragDrop);
             this.lbBatchFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.lbBatchFiles_DragEnter);
             // 
             // btnAddToBatch
             // 
-            this.btnAddToBatch.Location = new System.Drawing.Point(6, 302);
+            this.btnAddToBatch.Location = new System.Drawing.Point(6, 321);
             this.btnAddToBatch.Name = "btnAddToBatch";
             this.btnAddToBatch.Size = new System.Drawing.Size(188, 23);
             this.btnAddToBatch.TabIndex = 4;
@@ -162,7 +163,7 @@
             this.gbResizeMode.Controls.Add(this.rbtnResizeModeCover);
             this.gbResizeMode.Controls.Add(this.rbtnResizeModeContain);
             this.gbResizeMode.Controls.Add(this.rbtnResizeModeStretch);
-            this.gbResizeMode.Location = new System.Drawing.Point(9, 129);
+            this.gbResizeMode.Location = new System.Drawing.Point(9, 148);
             this.gbResizeMode.Name = "gbResizeMode";
             this.gbResizeMode.Size = new System.Drawing.Size(247, 48);
             this.gbResizeMode.TabIndex = 11;
@@ -198,7 +199,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtWidth);
             this.groupBox1.Controls.Add(this.txtHeight);
-            this.groupBox1.Location = new System.Drawing.Point(9, 72);
+            this.groupBox1.Location = new System.Drawing.Point(9, 91);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(247, 51);
             this.groupBox1.TabIndex = 12;
@@ -232,7 +233,7 @@
             this.gbOutput.Controls.Add(this.btnProcess);
             this.gbOutput.Location = new System.Drawing.Point(414, 7);
             this.gbOutput.Name = "gbOutput";
-            this.gbOutput.Size = new System.Drawing.Size(262, 331);
+            this.gbOutput.Size = new System.Drawing.Size(262, 352);
             this.gbOutput.TabIndex = 14;
             this.gbOutput.TabStop = false;
             this.gbOutput.Text = "Output";
@@ -242,7 +243,7 @@
             this.gbCollisionAction.Controls.Add(this.rbtnOverwrite);
             this.gbCollisionAction.Controls.Add(this.rbtnRename);
             this.gbCollisionAction.Controls.Add(this.rbtnSkip);
-            this.gbCollisionAction.Location = new System.Drawing.Point(9, 238);
+            this.gbCollisionAction.Location = new System.Drawing.Point(9, 257);
             this.gbCollisionAction.Name = "gbCollisionAction";
             this.gbCollisionAction.Size = new System.Drawing.Size(245, 58);
             this.gbCollisionAction.TabIndex = 15;
@@ -287,7 +288,7 @@
             // gbOptions
             // 
             this.gbOptions.Controls.Add(this.chkClearBatchPost);
-            this.gbOptions.Location = new System.Drawing.Point(9, 184);
+            this.gbOptions.Location = new System.Drawing.Point(9, 203);
             this.gbOptions.Name = "gbOptions";
             this.gbOptions.Size = new System.Drawing.Size(247, 47);
             this.gbOptions.TabIndex = 14;
@@ -306,11 +307,12 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkMaintainRelativePath);
             this.groupBox2.Controls.Add(this.lblOutputPath);
             this.groupBox2.Controls.Add(this.btnSelectOutputFolder);
             this.groupBox2.Location = new System.Drawing.Point(9, 14);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(247, 52);
+            this.groupBox2.Size = new System.Drawing.Size(247, 73);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output Path";
@@ -329,14 +331,14 @@
             this.gbBatch.Controls.Add(this.lbBatchFiles);
             this.gbBatch.Location = new System.Drawing.Point(208, 7);
             this.gbBatch.Name = "gbBatch";
-            this.gbBatch.Size = new System.Drawing.Size(200, 331);
+            this.gbBatch.Size = new System.Drawing.Size(200, 352);
             this.gbBatch.TabIndex = 15;
             this.gbBatch.TabStop = false;
             this.gbBatch.Text = "Batch";
             // 
             // btnClearBatch
             // 
-            this.btnClearBatch.Location = new System.Drawing.Point(7, 302);
+            this.btnClearBatch.Location = new System.Drawing.Point(7, 321);
             this.btnClearBatch.Name = "btnClearBatch";
             this.btnClearBatch.Size = new System.Drawing.Size(187, 23);
             this.btnClearBatch.TabIndex = 4;
@@ -352,7 +354,7 @@
             this.gbInput.Controls.Add(this.lblBatchFiles);
             this.gbInput.Location = new System.Drawing.Point(2, 7);
             this.gbInput.Name = "gbInput";
-            this.gbInput.Size = new System.Drawing.Size(200, 331);
+            this.gbInput.Size = new System.Drawing.Size(200, 352);
             this.gbInput.TabIndex = 16;
             this.gbInput.TabStop = false;
             this.gbInput.Text = "Input";
@@ -366,16 +368,26 @@
             // 
             // pbResizeProgress
             // 
-            this.pbResizeProgress.Location = new System.Drawing.Point(2, 344);
+            this.pbResizeProgress.Location = new System.Drawing.Point(2, 365);
             this.pbResizeProgress.Name = "pbResizeProgress";
             this.pbResizeProgress.Size = new System.Drawing.Size(674, 23);
             this.pbResizeProgress.TabIndex = 17;
+            // 
+            // chkMaintainRelativePath
+            // 
+            this.chkMaintainRelativePath.AutoSize = true;
+            this.chkMaintainRelativePath.Location = new System.Drawing.Point(8, 48);
+            this.chkMaintainRelativePath.Name = "chkMaintainRelativePath";
+            this.chkMaintainRelativePath.Size = new System.Drawing.Size(133, 17);
+            this.chkMaintainRelativePath.TabIndex = 7;
+            this.chkMaintainRelativePath.Text = "Maintain Relative Path";
+            this.chkMaintainRelativePath.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(680, 374);
+            this.ClientSize = new System.Drawing.Size(682, 394);
             this.Controls.Add(this.pbResizeProgress);
             this.Controls.Add(this.gbInput);
             this.Controls.Add(this.gbBatch);
@@ -395,6 +407,7 @@
             this.gbOptions.ResumeLayout(false);
             this.gbOptions.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.gbBatch.ResumeLayout(false);
             this.gbInput.ResumeLayout(false);
             this.gbInput.PerformLayout();
@@ -435,5 +448,6 @@
         private System.Windows.Forms.RadioButton rbtnRename;
         private System.Windows.Forms.RadioButton rbtnSkip;
         private System.Windows.Forms.ProgressBar pbResizeProgress;
+        private System.Windows.Forms.CheckBox chkMaintainRelativePath;
     }
 }
