@@ -16,6 +16,10 @@
     <PackageReference Include="Magick.NET-Q8-AnyCPU">
       <Version>7.23.4</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="SkiaSharp">
       <Version>1.68.3</Version>
     </PackageReference>

@@ -52,13 +52,13 @@
             this.gbOptions = new System.Windows.Forms.GroupBox();
             this.chkClearBatchPost = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkMaintainRelativePath = new System.Windows.Forms.CheckBox();
             this.lblOutputPath = new System.Windows.Forms.Label();
             this.gbBatch = new System.Windows.Forms.GroupBox();
             this.btnClearBatch = new System.Windows.Forms.Button();
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.bwResizeWorker = new System.ComponentModel.BackgroundWorker();
             this.pbResizeProgress = new System.Windows.Forms.ProgressBar();
-            this.chkMaintainRelativePath = new System.Windows.Forms.CheckBox();
             this.gbResizeMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbOutput.SuspendLayout();
@@ -71,9 +71,10 @@
             // 
             // btnProcess
             // 
-            this.btnProcess.Location = new System.Drawing.Point(9, 321);
+            this.btnProcess.Location = new System.Drawing.Point(10, 370);
+            this.btnProcess.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnProcess.Name = "btnProcess";
-            this.btnProcess.Size = new System.Drawing.Size(247, 23);
+            this.btnProcess.Size = new System.Drawing.Size(288, 27);
             this.btnProcess.TabIndex = 0;
             this.btnProcess.Text = "Process";
             this.btnProcess.UseVisualStyleBackColor = true;
@@ -81,9 +82,10 @@
             // 
             // btnSelectSource
             // 
-            this.btnSelectSource.Location = new System.Drawing.Point(6, 19);
+            this.btnSelectSource.Location = new System.Drawing.Point(7, 22);
+            this.btnSelectSource.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSelectSource.Name = "btnSelectSource";
-            this.btnSelectSource.Size = new System.Drawing.Size(188, 23);
+            this.btnSelectSource.Size = new System.Drawing.Size(219, 27);
             this.btnSelectSource.TabIndex = 2;
             this.btnSelectSource.Text = "Browse";
             this.btnSelectSource.UseVisualStyleBackColor = true;
@@ -93,10 +95,12 @@
             // 
             this.lbSourceFiles.DisplayMember = "Name";
             this.lbSourceFiles.FormattingEnabled = true;
-            this.lbSourceFiles.Location = new System.Drawing.Point(6, 48);
+            this.lbSourceFiles.ItemHeight = 15;
+            this.lbSourceFiles.Location = new System.Drawing.Point(7, 55);
+            this.lbSourceFiles.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.lbSourceFiles.Name = "lbSourceFiles";
             this.lbSourceFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSourceFiles.Size = new System.Drawing.Size(188, 264);
+            this.lbSourceFiles.Size = new System.Drawing.Size(219, 304);
             this.lbSourceFiles.TabIndex = 1;
             // 
             // lbBatchFiles
@@ -104,18 +108,21 @@
             this.lbBatchFiles.AllowDrop = true;
             this.lbBatchFiles.DisplayMember = "Name";
             this.lbBatchFiles.FormattingEnabled = true;
-            this.lbBatchFiles.Location = new System.Drawing.Point(7, 19);
+            this.lbBatchFiles.ItemHeight = 15;
+            this.lbBatchFiles.Location = new System.Drawing.Point(8, 22);
+            this.lbBatchFiles.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.lbBatchFiles.Name = "lbBatchFiles";
-            this.lbBatchFiles.Size = new System.Drawing.Size(187, 290);
+            this.lbBatchFiles.Size = new System.Drawing.Size(218, 334);
             this.lbBatchFiles.TabIndex = 3;
             this.lbBatchFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.lbBatchFiles_DragDrop);
             this.lbBatchFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.lbBatchFiles_DragEnter);
             // 
             // btnAddToBatch
             // 
-            this.btnAddToBatch.Location = new System.Drawing.Point(6, 321);
+            this.btnAddToBatch.Location = new System.Drawing.Point(7, 370);
+            this.btnAddToBatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnAddToBatch.Name = "btnAddToBatch";
-            this.btnAddToBatch.Size = new System.Drawing.Size(188, 23);
+            this.btnAddToBatch.Size = new System.Drawing.Size(219, 27);
             this.btnAddToBatch.TabIndex = 4;
             this.btnAddToBatch.Text = "Add Selected To Batch";
             this.btnAddToBatch.UseVisualStyleBackColor = true;
@@ -123,9 +130,10 @@
             // 
             // btnSelectOutputFolder
             // 
-            this.btnSelectOutputFolder.Location = new System.Drawing.Point(8, 19);
+            this.btnSelectOutputFolder.Location = new System.Drawing.Point(9, 22);
+            this.btnSelectOutputFolder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSelectOutputFolder.Name = "btnSelectOutputFolder";
-            this.btnSelectOutputFolder.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectOutputFolder.Size = new System.Drawing.Size(88, 27);
             this.btnSelectOutputFolder.TabIndex = 5;
             this.btnSelectOutputFolder.Text = "Select Destination";
             this.btnSelectOutputFolder.UseVisualStyleBackColor = true;
@@ -133,26 +141,29 @@
             // 
             // txtHeight
             // 
-            this.txtHeight.Location = new System.Drawing.Point(148, 19);
+            this.txtHeight.Location = new System.Drawing.Point(173, 22);
+            this.txtHeight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtHeight.Name = "txtHeight";
-            this.txtHeight.Size = new System.Drawing.Size(77, 20);
+            this.txtHeight.Size = new System.Drawing.Size(89, 23);
             this.txtHeight.TabIndex = 1;
             this.txtHeight.Text = "1024";
             // 
             // txtWidth
             // 
-            this.txtWidth.Location = new System.Drawing.Point(22, 19);
+            this.txtWidth.Location = new System.Drawing.Point(26, 22);
+            this.txtWidth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtWidth.Name = "txtWidth";
-            this.txtWidth.Size = new System.Drawing.Size(77, 20);
+            this.txtWidth.Size = new System.Drawing.Size(89, 23);
             this.txtWidth.TabIndex = 0;
             this.txtWidth.Text = "1024";
             // 
             // rbtnResizeModeStretch
             // 
             this.rbtnResizeModeStretch.AutoSize = true;
-            this.rbtnResizeModeStretch.Location = new System.Drawing.Point(182, 19);
+            this.rbtnResizeModeStretch.Location = new System.Drawing.Point(212, 22);
+            this.rbtnResizeModeStretch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rbtnResizeModeStretch.Name = "rbtnResizeModeStretch";
-            this.rbtnResizeModeStretch.Size = new System.Drawing.Size(59, 17);
+            this.rbtnResizeModeStretch.Size = new System.Drawing.Size(62, 19);
             this.rbtnResizeModeStretch.TabIndex = 10;
             this.rbtnResizeModeStretch.Tag = "3";
             this.rbtnResizeModeStretch.Text = "Stretch";
@@ -163,9 +174,12 @@
             this.gbResizeMode.Controls.Add(this.rbtnResizeModeCover);
             this.gbResizeMode.Controls.Add(this.rbtnResizeModeContain);
             this.gbResizeMode.Controls.Add(this.rbtnResizeModeStretch);
-            this.gbResizeMode.Location = new System.Drawing.Point(9, 148);
+            this.gbResizeMode.Enabled = false;
+            this.gbResizeMode.Location = new System.Drawing.Point(10, 171);
+            this.gbResizeMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbResizeMode.Name = "gbResizeMode";
-            this.gbResizeMode.Size = new System.Drawing.Size(247, 48);
+            this.gbResizeMode.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gbResizeMode.Size = new System.Drawing.Size(288, 55);
             this.gbResizeMode.TabIndex = 11;
             this.gbResizeMode.TabStop = false;
             this.gbResizeMode.Text = "Resize Mode";
@@ -173,9 +187,10 @@
             // rbtnResizeModeCover
             // 
             this.rbtnResizeModeCover.AutoSize = true;
-            this.rbtnResizeModeCover.Location = new System.Drawing.Point(102, 19);
+            this.rbtnResizeModeCover.Location = new System.Drawing.Point(119, 22);
+            this.rbtnResizeModeCover.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rbtnResizeModeCover.Name = "rbtnResizeModeCover";
-            this.rbtnResizeModeCover.Size = new System.Drawing.Size(53, 17);
+            this.rbtnResizeModeCover.Size = new System.Drawing.Size(56, 19);
             this.rbtnResizeModeCover.TabIndex = 12;
             this.rbtnResizeModeCover.Tag = "1";
             this.rbtnResizeModeCover.Text = "Cover";
@@ -185,9 +200,10 @@
             // 
             this.rbtnResizeModeContain.AutoSize = true;
             this.rbtnResizeModeContain.Checked = true;
-            this.rbtnResizeModeContain.Location = new System.Drawing.Point(6, 19);
+            this.rbtnResizeModeContain.Location = new System.Drawing.Point(7, 22);
+            this.rbtnResizeModeContain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rbtnResizeModeContain.Name = "rbtnResizeModeContain";
-            this.rbtnResizeModeContain.Size = new System.Drawing.Size(61, 17);
+            this.rbtnResizeModeContain.Size = new System.Drawing.Size(67, 19);
             this.rbtnResizeModeContain.TabIndex = 11;
             this.rbtnResizeModeContain.TabStop = true;
             this.rbtnResizeModeContain.Tag = "2";
@@ -199,9 +215,11 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtWidth);
             this.groupBox1.Controls.Add(this.txtHeight);
-            this.groupBox1.Location = new System.Drawing.Point(9, 91);
+            this.groupBox1.Location = new System.Drawing.Point(10, 105);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(247, 51);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox1.Size = new System.Drawing.Size(288, 59);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dimensions";
@@ -209,18 +227,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(118, 22);
+            this.label1.Location = new System.Drawing.Point(138, 25);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(12, 13);
+            this.label1.Size = new System.Drawing.Size(13, 15);
             this.label1.TabIndex = 9;
             this.label1.Text = "x";
             // 
             // lblBatchFiles
             // 
             this.lblBatchFiles.AutoSize = true;
-            this.lblBatchFiles.Location = new System.Drawing.Point(174, 28);
+            this.lblBatchFiles.Location = new System.Drawing.Point(203, 32);
+            this.lblBatchFiles.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBatchFiles.Name = "lblBatchFiles";
-            this.lblBatchFiles.Size = new System.Drawing.Size(0, 13);
+            this.lblBatchFiles.Size = new System.Drawing.Size(0, 15);
             this.lblBatchFiles.TabIndex = 13;
             // 
             // gbOutput
@@ -231,9 +251,11 @@
             this.gbOutput.Controls.Add(this.gbResizeMode);
             this.gbOutput.Controls.Add(this.groupBox1);
             this.gbOutput.Controls.Add(this.btnProcess);
-            this.gbOutput.Location = new System.Drawing.Point(414, 7);
+            this.gbOutput.Location = new System.Drawing.Point(483, 8);
+            this.gbOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbOutput.Name = "gbOutput";
-            this.gbOutput.Size = new System.Drawing.Size(262, 352);
+            this.gbOutput.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gbOutput.Size = new System.Drawing.Size(306, 406);
             this.gbOutput.TabIndex = 14;
             this.gbOutput.TabStop = false;
             this.gbOutput.Text = "Output";
@@ -243,9 +265,11 @@
             this.gbCollisionAction.Controls.Add(this.rbtnOverwrite);
             this.gbCollisionAction.Controls.Add(this.rbtnRename);
             this.gbCollisionAction.Controls.Add(this.rbtnSkip);
-            this.gbCollisionAction.Location = new System.Drawing.Point(9, 257);
+            this.gbCollisionAction.Location = new System.Drawing.Point(10, 297);
+            this.gbCollisionAction.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbCollisionAction.Name = "gbCollisionAction";
-            this.gbCollisionAction.Size = new System.Drawing.Size(245, 58);
+            this.gbCollisionAction.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gbCollisionAction.Size = new System.Drawing.Size(286, 67);
             this.gbCollisionAction.TabIndex = 15;
             this.gbCollisionAction.TabStop = false;
             this.gbCollisionAction.Text = "Collisions";
@@ -253,9 +277,10 @@
             // rbtnOverwrite
             // 
             this.rbtnOverwrite.AutoSize = true;
-            this.rbtnOverwrite.Location = new System.Drawing.Point(171, 19);
+            this.rbtnOverwrite.Location = new System.Drawing.Point(200, 22);
+            this.rbtnOverwrite.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rbtnOverwrite.Name = "rbtnOverwrite";
-            this.rbtnOverwrite.Size = new System.Drawing.Size(70, 17);
+            this.rbtnOverwrite.Size = new System.Drawing.Size(76, 19);
             this.rbtnOverwrite.TabIndex = 2;
             this.rbtnOverwrite.Tag = "4";
             this.rbtnOverwrite.Text = "Overwrite";
@@ -264,9 +289,10 @@
             // rbtnRename
             // 
             this.rbtnRename.AutoSize = true;
-            this.rbtnRename.Location = new System.Drawing.Point(77, 19);
+            this.rbtnRename.Location = new System.Drawing.Point(90, 22);
+            this.rbtnRename.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rbtnRename.Name = "rbtnRename";
-            this.rbtnRename.Size = new System.Drawing.Size(90, 17);
+            this.rbtnRename.Size = new System.Drawing.Size(95, 19);
             this.rbtnRename.TabIndex = 1;
             this.rbtnRename.Tag = "2";
             this.rbtnRename.Text = "Rename New";
@@ -276,9 +302,10 @@
             // 
             this.rbtnSkip.AutoSize = true;
             this.rbtnSkip.Checked = true;
-            this.rbtnSkip.Location = new System.Drawing.Point(8, 19);
+            this.rbtnSkip.Location = new System.Drawing.Point(9, 22);
+            this.rbtnSkip.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rbtnSkip.Name = "rbtnSkip";
-            this.rbtnSkip.Size = new System.Drawing.Size(46, 17);
+            this.rbtnSkip.Size = new System.Drawing.Size(47, 19);
             this.rbtnSkip.TabIndex = 0;
             this.rbtnSkip.TabStop = true;
             this.rbtnSkip.Tag = "1";
@@ -288,9 +315,11 @@
             // gbOptions
             // 
             this.gbOptions.Controls.Add(this.chkClearBatchPost);
-            this.gbOptions.Location = new System.Drawing.Point(9, 203);
+            this.gbOptions.Location = new System.Drawing.Point(10, 234);
+            this.gbOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbOptions.Name = "gbOptions";
-            this.gbOptions.Size = new System.Drawing.Size(247, 47);
+            this.gbOptions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gbOptions.Size = new System.Drawing.Size(288, 54);
             this.gbOptions.TabIndex = 14;
             this.gbOptions.TabStop = false;
             this.gbOptions.Text = "Options";
@@ -298,9 +327,10 @@
             // chkClearBatchPost
             // 
             this.chkClearBatchPost.AutoSize = true;
-            this.chkClearBatchPost.Location = new System.Drawing.Point(6, 19);
+            this.chkClearBatchPost.Location = new System.Drawing.Point(7, 22);
+            this.chkClearBatchPost.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chkClearBatchPost.Name = "chkClearBatchPost";
-            this.chkClearBatchPost.Size = new System.Drawing.Size(136, 17);
+            this.chkClearBatchPost.Size = new System.Drawing.Size(148, 19);
             this.chkClearBatchPost.TabIndex = 0;
             this.chkClearBatchPost.Text = "Clear batch when done";
             this.chkClearBatchPost.UseVisualStyleBackColor = true;
@@ -310,18 +340,32 @@
             this.groupBox2.Controls.Add(this.chkMaintainRelativePath);
             this.groupBox2.Controls.Add(this.lblOutputPath);
             this.groupBox2.Controls.Add(this.btnSelectOutputFolder);
-            this.groupBox2.Location = new System.Drawing.Point(9, 14);
+            this.groupBox2.Location = new System.Drawing.Point(10, 16);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(247, 73);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox2.Size = new System.Drawing.Size(288, 84);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output Path";
             // 
+            // chkMaintainRelativePath
+            // 
+            this.chkMaintainRelativePath.AutoSize = true;
+            this.chkMaintainRelativePath.Location = new System.Drawing.Point(9, 55);
+            this.chkMaintainRelativePath.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.chkMaintainRelativePath.Name = "chkMaintainRelativePath";
+            this.chkMaintainRelativePath.Size = new System.Drawing.Size(144, 19);
+            this.chkMaintainRelativePath.TabIndex = 7;
+            this.chkMaintainRelativePath.Text = "Maintain Relative Path";
+            this.chkMaintainRelativePath.UseVisualStyleBackColor = true;
+            // 
             // lblOutputPath
             // 
-            this.lblOutputPath.Location = new System.Drawing.Point(89, 24);
+            this.lblOutputPath.Location = new System.Drawing.Point(104, 28);
+            this.lblOutputPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblOutputPath.Name = "lblOutputPath";
-            this.lblOutputPath.Size = new System.Drawing.Size(152, 18);
+            this.lblOutputPath.Size = new System.Drawing.Size(177, 21);
             this.lblOutputPath.TabIndex = 6;
             this.lblOutputPath.Text = "None Selected";
             // 
@@ -329,18 +373,21 @@
             // 
             this.gbBatch.Controls.Add(this.btnClearBatch);
             this.gbBatch.Controls.Add(this.lbBatchFiles);
-            this.gbBatch.Location = new System.Drawing.Point(208, 7);
+            this.gbBatch.Location = new System.Drawing.Point(243, 8);
+            this.gbBatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbBatch.Name = "gbBatch";
-            this.gbBatch.Size = new System.Drawing.Size(200, 352);
+            this.gbBatch.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gbBatch.Size = new System.Drawing.Size(233, 406);
             this.gbBatch.TabIndex = 15;
             this.gbBatch.TabStop = false;
             this.gbBatch.Text = "Batch";
             // 
             // btnClearBatch
             // 
-            this.btnClearBatch.Location = new System.Drawing.Point(7, 321);
+            this.btnClearBatch.Location = new System.Drawing.Point(8, 370);
+            this.btnClearBatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnClearBatch.Name = "btnClearBatch";
-            this.btnClearBatch.Size = new System.Drawing.Size(187, 23);
+            this.btnClearBatch.Size = new System.Drawing.Size(218, 27);
             this.btnClearBatch.TabIndex = 4;
             this.btnClearBatch.Text = "Clear Batch";
             this.btnClearBatch.UseVisualStyleBackColor = true;
@@ -352,9 +399,11 @@
             this.gbInput.Controls.Add(this.lbSourceFiles);
             this.gbInput.Controls.Add(this.btnAddToBatch);
             this.gbInput.Controls.Add(this.lblBatchFiles);
-            this.gbInput.Location = new System.Drawing.Point(2, 7);
+            this.gbInput.Location = new System.Drawing.Point(2, 8);
+            this.gbInput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbInput.Name = "gbInput";
-            this.gbInput.Size = new System.Drawing.Size(200, 352);
+            this.gbInput.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gbInput.Size = new System.Drawing.Size(233, 406);
             this.gbInput.TabIndex = 16;
             this.gbInput.TabStop = false;
             this.gbInput.Text = "Input";
@@ -368,35 +417,27 @@
             // 
             // pbResizeProgress
             // 
-            this.pbResizeProgress.Location = new System.Drawing.Point(2, 365);
+            this.pbResizeProgress.Location = new System.Drawing.Point(2, 421);
+            this.pbResizeProgress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbResizeProgress.Name = "pbResizeProgress";
-            this.pbResizeProgress.Size = new System.Drawing.Size(674, 23);
+            this.pbResizeProgress.Size = new System.Drawing.Size(786, 27);
             this.pbResizeProgress.TabIndex = 17;
-            // 
-            // chkMaintainRelativePath
-            // 
-            this.chkMaintainRelativePath.AutoSize = true;
-            this.chkMaintainRelativePath.Location = new System.Drawing.Point(8, 48);
-            this.chkMaintainRelativePath.Name = "chkMaintainRelativePath";
-            this.chkMaintainRelativePath.Size = new System.Drawing.Size(133, 17);
-            this.chkMaintainRelativePath.TabIndex = 7;
-            this.chkMaintainRelativePath.Text = "Maintain Relative Path";
-            this.chkMaintainRelativePath.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 394);
+            this.ClientSize = new System.Drawing.Size(796, 455);
             this.Controls.Add(this.pbResizeProgress);
             this.Controls.Add(this.gbInput);
             this.Controls.Add(this.gbBatch);
             this.Controls.Add(this.gbOutput);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Main";
+            this.Text = "Batch Image Resizer";
             this.gbResizeMode.ResumeLayout(false);
             this.gbResizeMode.PerformLayout();
             this.groupBox1.ResumeLayout(false);
