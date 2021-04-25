@@ -19,7 +19,6 @@ namespace BIR.WinForms {
         string destPath;
         int targetHeight;
         int targetWidth;
-        Common.Enums.ResizeMode resizeMode = Common.Enums.ResizeMode.Contain;
         Common.Enums.CollisionAction collisionAction = Common.Enums.CollisionAction.Skip;
 
         public Main() {
@@ -39,10 +38,9 @@ namespace BIR.WinForms {
             }
         }
 
-
         private void BuildFileTreeRecursive(string rootPath)
         {
-            DirectoryInfo srcFolder = new DirectoryInfo(rootPath);
+            DirectoryInfo srcFolder = new(rootPath);
 
             foreach (FileInfo fi in srcFolder.GetFiles().Where(fi => acceptedExtensions.Contains(fi.Extension.ToLower())))
             {
@@ -55,10 +53,8 @@ namespace BIR.WinForms {
             }
         }
 
-
-
         private void btnAddToBatch_Click(object sender, EventArgs e) {
-            foreach (BIR.Common.Models.ImageReference ir in lbSourceFiles.SelectedItems) {
+            foreach (ImageReference ir in lbSourceFiles.SelectedItems) {
                 lbBatchFiles.Items.Add(ir);
             }
         }
@@ -80,7 +76,6 @@ namespace BIR.WinForms {
         }
 
         private void btnProcess_Click(object sender, EventArgs e) {
-            bool resizeModeSet = false;
             bool collisionActionSet = false;
 
             if (!Int32.TryParse(txtHeight.Text, out targetHeight) || !(Int32.TryParse(txtWidth.Text, out targetWidth))) {
@@ -90,17 +85,6 @@ namespace BIR.WinForms {
 
             if (string.IsNullOrWhiteSpace(destPath)) {
                 MessageBox.Show("Select a destination path", "Error", MessageBoxButtons.OK);
-                return;
-            }
-
-            foreach (RadioButton rbtn in gbResizeMode.Controls) {
-                if (rbtn.Checked) {
-                    resizeMode = (Common.Enums.ResizeMode)Convert.ToInt32((rbtn.Tag));
-                    resizeModeSet = true;
-                }
-            }
-            if (!resizeModeSet) {
-                MessageBox.Show("Resize Mode must be selected", "Error", MessageBoxButtons.OK);
                 return;
             }
 
@@ -124,16 +108,12 @@ namespace BIR.WinForms {
 
         private void lbBatchFiles_DragDrop(object sender, DragEventArgs e) {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-
             foreach (string file in files) {
                 var fi = new FileInfo(file);
                 if (acceptedExtensions.Contains(fi.Extension.ToLower())) {
                     lbBatchFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
                 }
             }
-
-
         }
 
         private void lbBatchFiles_DragEnter(object sender, DragEventArgs e) {
@@ -203,57 +183,51 @@ namespace BIR.WinForms {
                         {
                             if (System.IO.File.Exists(ir.FullName))
                             {
-                                using (MagickImage original = new MagickImage(ir.FullName))
+                                using MagickImage original = new(ir.FullName)
                                 {
-                                    original.Format = MagickFormat.Jpg;
-                                    original.Write(ir.FullName.Replace(".heic", ".jpg"));
-                                    System.IO.File.Delete(ir.FullName);
-                                }
+                                    Format = MagickFormat.Jpg,
+                                };
+                                original.Write(ir.FullName.Replace(".heic", ".jpg"));
+                                System.IO.File.Delete(ir.FullName);
                             }
                             ir.FullName = ir.FullName.Replace(".heic", ".jpg");
                         }
 
-                        using (var fileStream = System.IO.File.Open(ir.FullName, FileMode.Open))
-                        {
-                            using (var bmp = LoadBitmap(fileStream, out SKEncodedOrigin origin))
-                            {
-                                SKBitmap bitmap = bmp;
+                        using var fileStream = System.IO.File.Open(ir.FullName, FileMode.Open);
+                        using var bmp = LoadBitmap(fileStream, out SKEncodedOrigin origin);
+                        SKBitmap bitmap = bmp;
 
-                                var bitmapRatio = (float)bitmap.Width / bitmap.Height;
-                                var resizeRatio = (float)targetWidth / targetHeight;
+                        var bitmapRatio = (float)bitmap.Width / bitmap.Height;
+                        var resizeRatio = (float)targetWidth / targetHeight;
 
-                                if (bitmapRatio > resizeRatio)
-                                { // original is more "landscape"
-                                    targetHeight = (int)Math.Round(bitmap.Height * ((float)targetWidth / bitmap.Width));
-                                }
-                                else
-                                {
-                                    targetWidth = (int)Math.Round(bitmap.Width * ((float)targetHeight / bitmap.Height));
-                                }
-
-                                var resizedImageInfo = new SKImageInfo(targetWidth, targetHeight, SKImageInfo.PlatformColorType, bitmap.AlphaType);
-
-                                using (var resizedBmp = bitmap.Resize(resizedImageInfo, SKFilterQuality.High))
-                                {
-
-                                    SKBitmap resizedBitmap = resizedBmp;
-                                    using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
-                                    {
-                                        var encodeFormat = SKEncodedImageFormat.Jpeg;
-
-                                        var data = resizedImage.Encode(encodeFormat, 90);
-
-                                        using (var resizedFile = System.IO.File.Create(targetPath))
-                                        {
-                                            data.SaveTo(resizedFile);
-                                        }
-                                    };
-
-                                }
-
-                                bitmap.Dispose();
-                            }
+                        if (bitmapRatio > resizeRatio)
+                        { // original is more "landscape"
+                            targetHeight = (int)Math.Round(bitmap.Height * ((float)targetWidth / bitmap.Width));
                         }
+                        else
+                        {
+                            targetWidth = (int)Math.Round(bitmap.Width * ((float)targetHeight / bitmap.Height));
+                        }
+
+                        var resizedImageInfo = new SKImageInfo(targetWidth, targetHeight, SKImageInfo.PlatformColorType, bitmap.AlphaType);
+
+                        using (var resizedBmp = bitmap.Resize(resizedImageInfo, SKFilterQuality.High))
+                        {
+
+                            SKBitmap resizedBitmap = resizedBmp;
+                            using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
+                            {
+                                var encodeFormat = SKEncodedImageFormat.Jpeg;
+
+                                var data = resizedImage.Encode(encodeFormat, 90);
+
+                                using var resizedFile = System.IO.File.Create(targetPath);
+                                data.SaveTo(resizedFile);
+                            };
+
+                        }
+
+                        bitmap.Dispose();
 
                     }
                     catch {/*Don't care right now*/ }
@@ -277,27 +251,22 @@ namespace BIR.WinForms {
                                  
         }
 
-        private SKBitmap LoadBitmap(System.IO.Stream stream, out SKEncodedOrigin origin)
+        private static SKBitmap LoadBitmap(System.IO.Stream stream, out SKEncodedOrigin origin)
         {
-            using (var s = new SKManagedStream(stream))
-            {
-                using (var codec = SKCodec.Create(s))
-                {
-                    origin = codec.EncodedOrigin;
-                    var info = codec.Info;
-                    var bitmap = new SKBitmap(info.Width, info.Height, SKImageInfo.PlatformColorType, info.IsOpaque ? SKAlphaType.Opaque : SKAlphaType.Premul);
+            using var s = new SKManagedStream(stream);
+            using var codec = SKCodec.Create(s);
+            origin = codec.EncodedOrigin;
+            var info = codec.Info;
+            var bitmap = new SKBitmap(info.Width, info.Height, SKImageInfo.PlatformColorType, info.IsOpaque ? SKAlphaType.Opaque : SKAlphaType.Premul);
 
-                    IntPtr length;
-                    var result = codec.GetPixels(bitmap.Info, bitmap.GetPixels(out length));
-                    if (result == SKCodecResult.Success || result == SKCodecResult.IncompleteInput)
-                    {
-                        return bitmap;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Unable to load bitmap from provided data");
-                    }
-                }
+            var result = codec.GetPixels(bitmap.Info, bitmap.GetPixels(out IntPtr length));
+            if (result == SKCodecResult.Success || result == SKCodecResult.IncompleteInput)
+            {
+                return bitmap;
+            }
+            else
+            {
+                throw new ArgumentException("Unable to load bitmap from provided data");
             }
         }
     }
