@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ImageMagick;
+using SkiaSharp;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -29,14 +31,28 @@ namespace BIR.WinForms {
                 srcPath = folderPicker.SelectedPath;
                 lbSourceFiles.Items.Clear();
                 lbSourceFiles.DisplayMember = "Name";
-                DirectoryInfo srcFolder = new DirectoryInfo(srcPath);
-
-                foreach (FileInfo fi in srcFolder.GetFiles().Where(fi => acceptedExtensions.Contains(fi.Extension.ToLower()))) {
-                    lbSourceFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
-                }
+                BuildFileTreeRecursive(srcPath);
 
             }
         }
+
+
+        private void BuildFileTreeRecursive(string rootPath)
+        {
+            DirectoryInfo srcFolder = new DirectoryInfo(rootPath);
+
+            foreach (FileInfo fi in srcFolder.GetFiles().Where(fi => acceptedExtensions.Contains(fi.Extension.ToLower())))
+            {
+                lbSourceFiles.Items.Add(new BIR.Common.Models.ImageReference { Name = fi.Name, FullName = fi.FullName });
+            }
+
+            foreach(DirectoryInfo di in srcFolder.GetDirectories())
+            {
+                BuildFileTreeRecursive(di.FullName);
+            }
+        }
+
+
 
         private void btnAddToBatch_Click(object sender, EventArgs e) {
             foreach (BIR.Common.Models.ImageReference ir in lbSourceFiles.SelectedItems) {
@@ -139,33 +155,97 @@ namespace BIR.WinForms {
                     break;
                 }
                 else {
+                    try
+                    {
 
-                    var workingName = ir.Name;
 
-                    var targetPath = Path.Combine(destPath, workingName);
-                    if (File.Exists(targetPath)) {
-                        switch (collisionAction) {
-                            case Common.Enums.CollisionAction.Skip:
-                                continue;
-                            case Common.Enums.CollisionAction.Overwrite:
-                                File.Delete(targetPath);
-                                break;
-                            case Common.Enums.CollisionAction.RenameResize:
-                                workingName = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_"  + ir.Name;
-                                targetPath = Path.Combine(destPath, workingName);
-                                break;
-                            case Common.Enums.CollisionAction.RenameExisting:
-                                var rename = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_" + ir.Name;
-                                var copyPath = Path.Combine(destPath, rename);
-                                File.Move(targetPath, copyPath);
-                                break;
+                        var workingName = ir.Name;
+
+                        var targetPath = Path.Combine(destPath, ir.FullName.Replace(srcPath + "\\", ""));
+                        if (File.Exists(targetPath))
+                        {
+                            switch (collisionAction)
+                            {
+                                case Common.Enums.CollisionAction.Skip:
+                                    continue;
+                                case Common.Enums.CollisionAction.Overwrite:
+                                    File.Delete(targetPath);
+                                    break;
+                                case Common.Enums.CollisionAction.RenameResize:
+                                    workingName = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_" + ir.Name;
+                                    targetPath = Path.Combine(destPath, workingName);
+                                    break;
+                                case Common.Enums.CollisionAction.RenameExisting:
+                                    var rename = DateTime.Now.ToString("yyyyMMddHHmmssff") + "_" + ir.Name;
+                                    var copyPath = Path.Combine(destPath, rename);
+                                    File.Move(targetPath, copyPath);
+                                    break;
+                            }
                         }
-                    }
 
-                    Image srcImage = Image.FromFile(ir.FullName);
-                    var resized = BIR.Common.ImageUtility.ResizeImage(srcImage, targetWidth, targetHeight, resizeMode);
-                    resized.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    resized.Dispose();
+                        var targetDir = new FileInfo(targetPath).Directory;
+                        if (!targetDir.Exists) { System.IO.Directory.CreateDirectory(targetDir.FullName); }
+
+                        //Check to see if the source file is an heic, if so convert it to a jpeg
+                        if (ir.FullName.EndsWith(".heic"))
+                        {
+                            if (System.IO.File.Exists(ir.FullName))
+                            {
+                                using (MagickImage original = new MagickImage(ir.FullName))
+                                {
+                                    original.Format = MagickFormat.Jpg;
+                                    original.Write(ir.FullName.Replace(".heic", ".jpg"));
+                                    System.IO.File.Delete(ir.FullName);
+                                }
+                            }
+                            ir.FullName = ir.FullName.Replace(".heic", ".jpg");
+                        }
+
+
+                        using (var fileStream = System.IO.File.Open(ir.FullName, FileMode.Open))
+                        {
+                            using (var bmp = LoadBitmap(fileStream, out SKEncodedOrigin origin))
+                            {
+                                SKBitmap bitmap = bmp;
+
+                                var bitmapRatio = (float)bitmap.Width / bitmap.Height;
+                                var resizeRatio = (float)targetWidth / targetHeight;
+
+                                if (bitmapRatio > resizeRatio)
+                                { // original is more "landscape"
+                                    targetHeight = (int)Math.Round(bitmap.Height * ((float)targetWidth / bitmap.Width));
+                                }
+                                else
+                                {
+                                    targetWidth = (int)Math.Round(bitmap.Width * ((float)targetHeight / bitmap.Height));
+                                }
+
+                                var resizedImageInfo = new SKImageInfo(targetWidth, targetHeight, SKImageInfo.PlatformColorType, bitmap.AlphaType);
+
+                                using (var resizedBmp = bitmap.Resize(resizedImageInfo, SKFilterQuality.High))
+                                {
+
+                                    SKBitmap resizedBitmap = resizedBmp;
+                                    using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
+                                    {
+                                        var encodeFormat = SKEncodedImageFormat.Jpeg;
+
+                                        var data = resizedImage.Encode(encodeFormat, 90);
+
+                                        using (var resizedFile = System.IO.File.Create(targetPath))
+                                        {
+                                            data.SaveTo(resizedFile);
+                                        }
+                                    };
+
+                                }
+
+                                bitmap.Dispose();
+                            }
+                        }
+
+                    }
+                    catch {/*Don't care right now*/ }
                 }
                 
    
@@ -184,6 +264,30 @@ namespace BIR.WinForms {
 
             pbResizeProgress.Value = e.ProgressPercentage;
                                  
+        }
+
+        private SKBitmap LoadBitmap(System.IO.Stream stream, out SKEncodedOrigin origin)
+        {
+            using (var s = new SKManagedStream(stream))
+            {
+                using (var codec = SKCodec.Create(s))
+                {
+                    origin = codec.EncodedOrigin;
+                    var info = codec.Info;
+                    var bitmap = new SKBitmap(info.Width, info.Height, SKImageInfo.PlatformColorType, info.IsOpaque ? SKAlphaType.Opaque : SKAlphaType.Premul);
+
+                    IntPtr length;
+                    var result = codec.GetPixels(bitmap.Info, bitmap.GetPixels(out length));
+                    if (result == SKCodecResult.Success || result == SKCodecResult.IncompleteInput)
+                    {
+                        return bitmap;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Unable to load bitmap from provided data");
+                    }
+                }
+            }
         }
     }
 }
