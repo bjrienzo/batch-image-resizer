@@ -146,7 +146,7 @@ namespace BIR.WinForms {
 
                         //Determine name for target file
                         var rootName = Path.GetFileNameWithoutExtension(ir.DirectoryPath);
-                        var resizeName = $"{rootName}_{txtWidth.Text}_{txtHeight.Text}.jpg";
+                        var resizeName = $"{rootName}_{txtWidth.Text}x{txtHeight.Text}.jpg";
                         var sourcePath = Path.Combine(ir.DirectoryPath, ir.Name);
                         
                         //Determine full path for the target file
