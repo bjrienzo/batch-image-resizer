@@ -187,6 +187,8 @@ namespace BIR.WinForms {
                         if (!targetDir.Exists) { System.IO.Directory.CreateDirectory(targetDir.FullName); }
 
                         //Check to see if the source file is an heic, if so convert it to a jpeg
+                        //ImageMagick Performance was unnaceptable for some reason during the resize process, so limiting use.
+                        //I don't need answers, I need results
                         if (ir.FullName.EndsWith(".heic"))
                         {
                             if (System.IO.File.Exists(ir.FullName))
@@ -200,7 +202,6 @@ namespace BIR.WinForms {
                             }
                             ir.FullName = ir.FullName.Replace(".heic", ".jpg");
                         }
-
 
                         using (var fileStream = System.IO.File.Open(ir.FullName, FileMode.Open))
                         {
