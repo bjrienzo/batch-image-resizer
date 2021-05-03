@@ -197,7 +197,7 @@ namespace BIR.WinForms {
                             if (!targetDir.Exists) { System.IO.Directory.CreateDirectory(targetDir.FullName); }
 
                             //If the source is an heic, convert it to jpg please. Thank you Apple.
-                            if (sourcePath.EndsWith(".heic"))
+                            if (sourcePath.EndsWith(".heic", StringComparison.OrdinalIgnoreCase))
                             {
                                 if (System.IO.File.Exists(sourcePath))
                                 {
@@ -205,10 +205,10 @@ namespace BIR.WinForms {
                                     {
                                         Format = MagickFormat.Jpg,
                                     };
-                                    original.Write(sourcePath.Replace(".heic", ".jpg"));
+                                    original.Write(sourcePath.Replace(".heic", ".jpg", StringComparison.OrdinalIgnoreCase));
                                     System.IO.File.Delete(sourcePath); //Yeah, its fine, they're my pictures
                                 }
-                                sourcePath = sourcePath.Replace(".heic", ".jpg");
+                                sourcePath = sourcePath.Replace(".heic", ".jpg", StringComparison.OrdinalIgnoreCase);
                             }
 
                             //Open the the source file for processing
